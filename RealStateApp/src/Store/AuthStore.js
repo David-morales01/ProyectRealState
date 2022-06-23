@@ -10,24 +10,25 @@ const useStore = create(set => ({
   error :false, 
   errorRegister:false,
   login: async (values) => {  
-    set({ disabled: true })  
-    const resp = ky
-    .post(`${process.env.REACT_APP_API_URL}/login`, {
-      json: values,  
-    }).json()
-    .then((resp) => {  
-      localStorage.setItem('access_token_route_shortener', resp.access_token)
-      set({ status: true })
-      set({ error: false })       
-    })
-     .catch((err) => {   
-       set({ error: true })  
-       console.log('error: ')
-       console.log(err)   
-     })  
-     .finally(()=>{
-      set({ disabled: false })  
-      })
+    // set({ disabled: true })  
+    // const resp = ky
+    // .post(`${process.env.REACT_APP_API_URL}/login`, {
+    //   json: values,  
+    // }).json()
+    // .then((resp) => {  
+    //   localStorage.setItem('access_token_route_shortener', resp.access_token)
+    //   set({ status: true })
+    //   set({ error: false })       
+    // })
+    //  .catch((err) => {   
+    //    set({ error: true })  
+    //    console.log('error: ')
+    //    console.log(err)   
+    //  })  
+    //  .finally(()=>{
+    //   set({ disabled: false })  
+    //   })
+    console.log(values)
   },
   register: async (values) => { 
     set({ disabled: true })   
