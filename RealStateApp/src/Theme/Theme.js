@@ -8,7 +8,11 @@ const Theme = extendTheme({
       buttonLight : '#0080FF',
       buttonDark : '#0066CC',  
       linkLight :'#373488',
-      linkDark :'#3C3295',  
+      linkDark :'#3C3295',   
+      alertLight :'rgba(254, 178, 178, 0.16)',
+      alertDark :'rgba(254, 178, 178, 0.16)', 
+      headerLight :'#3347d3',
+      headerDark :'#3347d3',  
     },
     color:{ 
       linkLight:'#5a5fdf',

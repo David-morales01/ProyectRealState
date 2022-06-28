@@ -1,82 +1,107 @@
-import create from 'zustand' 
-// import {devtools,persist} from 'zustand/middleware' 
-import ky from "ky"; 
- 
-const useStore = create(set => ({ 
+import create from 'zustand'
+// import {devtools,persist} from 'zustand/middleware'
+import ky from "ky";
+
+const useStore = create(set => ({
   user_id:null,
   status:null,
-  disabled:false, 
-  loading:false, 
-  error :false, 
-  errorRegister:false,
-  login: async (values) => {  
-    // set({ disabled: true })  
-    // const resp = ky
-    // .post(`${process.env.REACT_APP_API_URL}/login`, {
-    //   json: values,  
-    // }).json()
-    // .then((resp) => {  
-    //   localStorage.setItem('access_token_route_shortener', resp.access_token)
-    //   set({ status: true })
-    //   set({ error: false })       
-    // })
-    //  .catch((err) => {   
-    //    set({ error: true })  
-    //    console.log('error: ')
-    //    console.log(err)   
-    //  })  
-    //  .finally(()=>{
-    //   set({ disabled: false })  
-    //   })
-    console.log(values)
+  disabled:false,
+  loading:false,
+  error :false,
+  login: async (values) => {
+     set({ disabled: true })
+     const resp = ky
+     .post(`${import.meta.env.VITE_REACT_APP_API_URL}/login`, {
+       json: values,throwHttpErrors: false,
+     }).json()
+     .then((resp) => {
+      if(resp.access_token){
+        localStorage.setItem('access_token_real_state', resp.access_token)
+        set({ status: true })
+      }
+      else{
+        if(resp.errors){
+          set({ error:  'The provided credentials are incorrect.' })
+        }else{
+
+          set({ error:  'server problems :( please try again later' })
+        }
+      }
+     })  .
+      catch((err) => {
+
+        set({ error:  'server problems :( please try again later' })
+      })
+      .finally(()=>{
+        set({ disabled: false })
+      })
   },
-  register: async (values) => { 
-    set({ disabled: true })   
-    const resp = ky
-    .post(`${process.env.REACT_APP_API_URL}/register`, {
-      json: values
-    })
-    .json()
-    .then((resp) => {  
-      localStorage.setItem('access_token_route_shortener', resp.access_token)
-      set({ status: true })     
-      set({ errorRegister: false })  
-    })
-    .catch((err) => {   
-       set({ errorRegister: true })  
-       console.log('error: ')
-       console.log(err)   
-     })
-     .finally(()=>{
-     set({ disabled: false })  
-     })
+  register: async (values) => {
+     set({ disabled: true })
+     const resp = ky
+     .post(`${import.meta.env.VITE_REACT_APP_API_URL}/register`, {
+       json: values,throwHttpErrors: false,
+     }).json()
+     .then((resp) => {
+      if(resp.access_token){
+        localStorage.setItem('access_token_real_state', resp.access_token)
+        set({ status: true })
+      }
+      else{
+        if(resp.errors){
+          set({ error:  'The provided credentials are incorrect.' })
+        }else{
+
+          set({ error:  'Server problems :( please try again later' })
+        }
+      }
+     })  .
+      catch((err) => {
+
+        set({ error:  'Server problems :( please try again later' })
+      })
+      .finally(()=>{
+        set({ disabled: false })
+      })
   },
-  validateUser: async () => {  
-    const accessToken = localStorage.getItem('access_token_route_shortener') 
-    const resp = ky.get(`${process.env.REACT_APP_API_URL}/user`, {
+  validateUser: async () => {
+    console.log('validado')
+    const accessToken = localStorage.getItem('access_token_real_state')
+    const resp = ky.get(`${import.meta.env.VITE_REACT_APP_API_URL}/user`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
+      },throwHttpErrors: false,
     })
     .json()
-    .then((resp) => {  
-      set({ user_id: resp.id })  
-      set({ status: true })   
-      set({ loading: true })    
-      // set({ user: resp })   
+    .then((resp) => {
+      // set({ user: resp })
+      if(resp.message){
+        localStorage.removeItem('access_token_real_state')
+        set({ status: false })
+        set({ error:  'Invalid Token, please try again later' }) 
+      }else{ 
+        set({ status: true })
+      }
     })
-    .catch((err) => {  
-      set({ loading: false })   
-      set({ status: false })   
-      localStorage.removeItem('access_token_route_shortener')  
-      console.log(err)  
-    })  
+    .catch((err) => {
+      
+      localStorage.removeItem('access_token_real_state')
+      set({ status: false }) 
+      console.log('error : ',err)
+      set({ error:  'Server problems :( please try again later' })
+    })
+    .finally(()=>{
+      set({ loading: true })
+    })
   },
     logOut:  () => {
-      localStorage.removeItem('access_token_route_shortener')  
-      set({ loading: false })  
-      set({ status: false })  
+      localStorage.removeItem('access_token_real_state')
+      set({ status: false })
   },
+  ErrorClose : ()=>{
+    set(state => ({error: false }) )
+
+  }
 }))
 
 export default useStore;

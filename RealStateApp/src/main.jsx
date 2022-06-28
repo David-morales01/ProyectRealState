@@ -1,24 +1,11 @@
-/* import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React, { StrictMode } from 'react' 
+import { ColorModeScript } from '@chakra-ui/react'
+import * as ReactDOM from 'react-dom/client'
 import App from './App' 
+import {BrowserRouter} from 'react-router-dom'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
-*/
-
-
-import { ColorModeScript } from '@chakra-ui/react';
-import React, { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom/client';
-import App from './App'; 
-import {BrowserRouter} from 'react-router-dom';
-
-const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container);
-
+const container = document.getElementById('root')
+const root = ReactDOM.createRoot(container) 
 root.render(
   <StrictMode>
     <ColorModeScript />
@@ -26,6 +13,6 @@ root.render(
     <App />
     </BrowserRouter>
   </StrictMode>
-);
+)
 
  
