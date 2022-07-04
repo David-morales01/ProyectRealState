@@ -25,7 +25,7 @@ const useStore = create(set => ({
         console.log('antes del mapa')
         setTimeout(()=>{
           set({ statusMap: true }) 
-          console.log('set del mapa ')
+          console.log('aparece mapa ')
       }, 8000);
       })
   },
