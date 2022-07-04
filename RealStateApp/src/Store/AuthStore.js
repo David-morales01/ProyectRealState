@@ -3,8 +3,8 @@ import create from 'zustand'
 import ky from "ky";
 
 const useStore = create(set => ({
-  user_id:null,
-  status:null,
+  user:{},
+  status:false,
   disabled:false,
   loading:false,
   error :false,
@@ -16,7 +16,7 @@ const useStore = create(set => ({
      }).json()
      .then((resp) => {
       if(resp.access_token){
-        localStorage.setItem('access_token_real_state', resp.access_token)
+        localStorage.setItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`, resp.access_token)
         set({ status: true })
       }
       else{
@@ -44,7 +44,7 @@ const useStore = create(set => ({
      }).json()
      .then((resp) => {
       if(resp.access_token){
-        localStorage.setItem('access_token_real_state', resp.access_token)
+        localStorage.setItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`, resp.access_token)
         set({ status: true })
       }
       else{
@@ -62,40 +62,55 @@ const useStore = create(set => ({
       })
       .finally(()=>{
         set({ disabled: false })
-      })
+      }) 
   },
-  validateUser: async () => {
-    console.log('validado')
-    const accessToken = localStorage.getItem('access_token_real_state')
-    const resp = ky.get(`${import.meta.env.VITE_REACT_APP_API_URL}/user`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },throwHttpErrors: false,
-    })
-    .json()
-    .then((resp) => {
-      // set({ user: resp })
-      if(resp.message){
-        localStorage.removeItem('access_token_real_state')
-        set({ status: false })
-        set({ error:  'Invalid Token, please try again later' }) 
-      }else{ 
-        set({ status: true })
-      }
-    })
-    .catch((err) => {
-      
-      localStorage.removeItem('access_token_real_state')
-      set({ status: false }) 
-      console.log('error : ',err)
-      set({ error:  'Server problems :( please try again later' })
-    })
-    .finally(()=>{
-      set({ loading: true })
-    })
+  
+  restartValues: async () => {
+    set({ loading: false })
+    set({ status: false })
+    set({ disabled: false }) 
+    
+  },
+  validateUser: async () => { 
+    set({ loading: false })
+    set({ status: false })
+    const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
+    
+    if(accessToken){
+      const resp = ky.get(`${import.meta.env.VITE_REACT_APP_API_URL}/user`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },throwHttpErrors: false,
+      })
+      .json()
+      .then((resp) => {
+        if(resp.message){
+          set({ error:  'invalid Token, please try again later' }) 
+          localStorage.removeItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
+        }else{ 
+          set({ status: true }) 
+          set({ user: resp })  
+        }
+      })
+      .catch((err) => {
+        set({ error:  'Server problems :( please try again later' }) 
+        localStorage.removeItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
+        set({ status: false }) 
+        console.log('error : ',err)
+      })
+      .finally(()=>{
+        set({ loading: true })  
+       })
+       
+    }else{
+       
+        set({ error:  'Login to continue' })  
+        set({ status: false }) 
+        set({ loading: true }) 
+    } 
   },
     logOut:  () => {
-      localStorage.removeItem('access_token_real_state')
+      localStorage.removeItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
       set({ status: false })
   },
   ErrorClose : ()=>{

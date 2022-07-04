@@ -47,6 +47,8 @@ class AuthController extends Controller
             ]
         );
 
+        $data['img_user']='default.png';
+
         $user = User::create(
             array_merge($data, ['password' => bcrypt($data['password'])])
         );

@@ -13,12 +13,19 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    { 
+        
+        $this->call(UserSeeder::class); 
+        $this->call(MarkerSeeder::class); 
+
+        \App\Models\Image::factory(10)->create();
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        //      'name' => 'Test User',
+        //      'email' => 'test@example.com',
+        //  ]);
+
+         
     }
 }

@@ -10,7 +10,7 @@ export default function ErrorMessage({error}) {
     useEffect(()=>{ 
         setTimeout (()=>{ 
             ErrorClose()
-        },8000);
+        },10000);
     },[])
 
     return isVisible ? (

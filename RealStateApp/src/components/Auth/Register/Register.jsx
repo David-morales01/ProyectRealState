@@ -25,8 +25,13 @@ export default function Login() {
     
     // navigate :)
     const navigate = useNavigate()  
-    // session validation
-    const accessToken = localStorage.getItem('access_token_real_state') 
+    // session token
+    const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`) 
+
+    useEffect(()=>{
+        if(!status){auth.restartValues()}
+    },[])
+
 
     if(accessToken){
         return (
@@ -128,9 +133,9 @@ export default function Login() {
                                 
                             </Form>
                             )}
-                        </Formik>
+                        </Formik> 
                     </Box> 
-                    <Flex  mt='4px' mb='10px' justifyContent='center'gap='4px'> 
+                    <Flex mt='4px' mb='10px' justifyContent='center'gap='4px'> 
                         <Text>Already have an account? </Text>
                         <Text color ={colorLink} > <Link to="/login" > Log In</Link></Text>
                     </Flex>

@@ -18,6 +18,7 @@ export default function Login() {
     const shadowButton = useColorModeValue('#A0A0A0', '#0066cc') 
     const bgborder = useColorModeValue('#f9cc1c,#eddc98,transparent 100%', '#facc14,#bb9f29,transparent 100%')
 
+
     // store
     const auth = AuthStore()  
     const status = AuthStore(state => state.status) 
@@ -25,18 +26,26 @@ export default function Login() {
     const error = AuthStore(state => state.error) 
     
     // navigate :)
-    const navigate = useNavigate()  
-    // session validation
-    const accessToken = localStorage.getItem('access_token_real_state') 
+    const navigate = useNavigate()
     
-    if(accessToken){ 
+    
+    // session token
+    const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`) 
+ 
+    
+    useEffect(()=>{
+        if(!status){auth.restartValues()}
+    },[])
+
+
+    if(accessToken){
         return (
             <>
                 <Navigate to="/"/> 
             </>
         );
     }
- 
+    
     if (!status) {  
         return ( 
             <Flex position='relative' minH='630px' minW='360' w='100vw' h ='100vh' justifyContent='center' alignItems='center'  backgroundImage= {`radial-gradient(circle at top , ${bgBody})`} backgroundRepeat='no-repeat' fontSize='xl'>
@@ -46,7 +55,7 @@ export default function Login() {
                     <Box position='relative' borderColor={borderColor} borderWidth= '1px' backgroundColor={bgContainer} px='30px' pt='4' pb='8' w='100%' borderRadius='20px' _before={{ position:'absolute', content: '""', width:'80%', height:'1px', backgroundImage:`radial-gradient(circle at top , ${bgborder})`, insetBlock:'-1px', insetInline:'10%'  }}>
                         <Formik
                             initialValues={{ 
-                                email:'david@gmail.com',
+                                email:'davidmorales@gmail.com',
                                 password:'1234567891',
                             }}
 
@@ -130,8 +139,12 @@ export default function Login() {
                     </Flex>
                 </Box> 
             </Flex> 
-        );
+        )
          
     }
-  }
+    
+     
+ 
+    
+}
  
