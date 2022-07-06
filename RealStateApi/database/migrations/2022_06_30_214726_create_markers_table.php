@@ -21,8 +21,10 @@ return new class extends Migration
             $table->integer('room');
             $table->integer('toilet');
             $table->float('price');
-            $table->string('coordinate');
+            $table->string('lat');
+            $table->string('long');
             $table->boolean('status');
+            $table->foreignId('type_id')->constrained();
             $table->timestamps();
         });
     }

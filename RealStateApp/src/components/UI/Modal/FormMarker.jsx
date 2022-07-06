@@ -1,6 +1,6 @@
 import React,{useEffect,useState}from 'react'
 import MapStore from '../../../Store/MapStore'
-import {useColorModeValue,Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,FormControl,FormLabel,Input,Button} from '@chakra-ui/react'
+import {Flex,useColorModeValue,Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,FormControl,FormLabel,Input,Button} from '@chakra-ui/react'
 import {FastField, Form, Formik} from 'formik' 
 
 export default function FormMarker() {
@@ -15,8 +15,7 @@ export default function FormMarker() {
         <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(4px) hue-rotate(30deg)' />
         <ModalContent>
           <ModalHeader>Create new marker</ModalHeader>
-          <ModalBody >  
-          </ModalBody>
+          <ModalBody  px={10}>  
             <Formik
               initialValues={{ 
                 
@@ -43,26 +42,54 @@ export default function FormMarker() {
               >
               {({errors,touched})=> (
               <Form>  
-                <FormControl h='20' my='8' isInvalid={errors.long && touched.long}> 
-                  <FastField   name="long"> 
-                    {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='text'  {...field} autoComplete='off'/>)}
-                  </FastField>   
-                  {touched.long && errors.long ? 
-                    <Text my='2' fontSize="14px" color={errorText}>{errors.long} </Text> :''
-                  }  
-                </FormControl>
+                <Flex justify='space-between'>
+                  
+                <FormControl w='45%' isInvalid={errors.long && touched.long}> 
+                    <FormLabel>Longitude</FormLabel>
+                    <FastField   name="long"> 
+                      {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
+                    </FastField>   
+                    {touched.long && errors.long ? 
+                      <Text my='2' fontSize="14px" color={errorText}>{errors.long} </Text> :''
+                    }  
+                  </FormControl>
 
-                <FormControl h='20' my='8' isInvalid={errors.lat && touched.lat}> 
-                  <FastField   name="lat"> 
-                    {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='text'  {...field} autoComplete='off'/>)}
-                  </FastField>   
-                  {touched.lat && errors.lat ? 
-                    <Text my='2' fontSize="14px" color={errorText}>{errors.lat} </Text> :''
-                  }  
-                </FormControl>
+                  <FormControl w='45%' isInvalid={errors.lat && touched.lat}> 
+                    <FormLabel>Latitude</FormLabel>
+                    <FastField   name="lat"> 
+                      {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
+                    </FastField>   
+                    {touched.lat && errors.lat ? 
+                      <Text my='2' fontSize="14px" color={errorText}>{errors.lat} </Text> :''
+                    }  
+                  </FormControl>
+                </Flex>
+                <Flex>
+                  <FormControl w='45%' isInvalid={errors.long && touched.long}> 
+                    <FormLabel>Longitude</FormLabel>
+                    <FastField   name="long"> 
+                      {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
+                    </FastField>   
+                    {touched.long && errors.long ? 
+                      <Text my='2' fontSize="14px" color={errorText}>{errors.long} </Text> :''
+                    }  
+                  </FormControl>
+
+                  <FormControl w='45%' isInvalid={errors.lat && touched.lat}> 
+                    <FormLabel>Latitude</FormLabel>
+                    <FastField   name="lat"> 
+                      {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
+                    </FastField>   
+                    {touched.lat && errors.lat ? 
+                      <Text my='2' fontSize="14px" color={errorText}>{errors.lat} </Text> :''
+                    }  
+                  </FormControl>
+                </Flex>
               </Form>
               )}
             </Formik>
+            
+          </ModalBody>
         </ModalContent>
       </Modal> 
   )

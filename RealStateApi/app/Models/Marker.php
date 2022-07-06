@@ -11,6 +11,9 @@ class Marker extends Model
     protected $guarded=[];
     use HasFactory;
 
+    protected $casts = [
+        'status' => 'boolean',
+    ];
     public function user(){
         return $this->belongsTo(User::class);
     }

@@ -25,7 +25,8 @@ class MarkerSeeder extends Seeder
                 'room' => rand(1,10),
                 'toilet' => rand(1,10),
                 'price' => rand(500,6000),
-                'coordinate' => '-86.25717043876647,12.126737986671706',
+                'long' => '-86.25717043876647',
+                'lat' => '2.126737986671706',
                 'status' => false,
                 'created_at' => now(),
             ]
@@ -39,7 +40,8 @@ class MarkerSeeder extends Seeder
                 'room' => rand(1,10),
                 'toilet' => rand(1,10),
                 'price' => rand(500,6000),
-                'coordinate' => '-86.27419710159302,12.140819668287174',
+                'long' => '-86.27419710159302',
+                'lat' => '12.140819668287174',
                 'status' => false,
                 'created_at' => now(), 
             ]
@@ -53,7 +55,8 @@ class MarkerSeeder extends Seeder
                 'room' => rand(1,10),
                 'toilet' => rand(1,10),
                 'price' => rand(500,6000),
-                'coordinate' => '-86.29731237888336,12.147049984859208',
+                'long' => '-86.29731237888336',
+                'lat' => '12.147049984859208',
                 'status' => false,
                 'created_at' => now(), 
             ]
@@ -67,7 +70,8 @@ class MarkerSeeder extends Seeder
                 'room' => rand(1,10),
                 'toilet' => rand(1,10),
                 'price' => rand(500,6000),
-                'coordinate' => '-86.26501590013504,12.128072762712032',
+                'long' => '-86.26501590013504',
+                'lat' => '12.128072762712032',
                 'status' => false,
                 'created_at' => now(), 
             ]

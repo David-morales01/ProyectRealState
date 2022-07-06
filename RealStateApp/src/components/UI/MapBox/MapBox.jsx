@@ -57,7 +57,9 @@ export default function MapBox(){
                 if(user.id == marker.user_id){
                     markerColor ='#FF3333'
                 }  //console.log(marker.images.length) 
-                const arrCoordinate = marker.coordinate.split(',');  
+                //const arrCoordinate = marker.coordinate.split(',');  
+                const arrCoordinate = [marker.long,marker.lat]
+                console.log(arrCoordinate)
                 new mapboxgl.Marker({ color: markerColor,fontSize:'90px' }).setLngLat(arrCoordinate)
                 .setPopup(
                     new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -76,13 +78,11 @@ export default function MapBox(){
             if(user.rol == 'admin'){
                 map.current.on('click',function(e){ 
                     // setCoordinate(e.lngLat)    quede en hacer el modal :"(
-                    console.log(e.target)
+                    // console.log(e.target)
                     // console.log(e.target.dataset.id)
                     mapStore.getCoordinate(e.lngLat)
                 
                 }) 
-            }else{
-                console.log('no hay permisos')
             }
         }   
         else{
@@ -94,7 +94,7 @@ export default function MapBox(){
     return (
         <>
              
-            <Box w='100%' h='100%' ref={mapDiv} position='relative'></Box>
+            <Box w='100%' h='100%'  ref={mapDiv} position='relative' className='cursorRancio'></Box>
 
             {/* <Box position='absolute' pointerEvents='none' inset='0' h='50%' w='50%' transition='6s' bg={bgContainer} opacity={statusMap?'0':'1'}></Box> */}
              {statusMap? '':<Spinner backGround='rgba(0, 0, 0, 0.8)' />}

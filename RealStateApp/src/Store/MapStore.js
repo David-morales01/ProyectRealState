@@ -18,10 +18,10 @@ const useStore = create((set,get) => ({
      }).json()
      .then((resp) => { 
         set({ markers: resp }) 
+        console.log(resp)
         set({ statusHttp: true }) 
          setTimeout(()=>{
-          set({ statusMap: true }) 
-          console.log('aparece mapa ')
+          set({ statusMap: true })  
       }, 14000);
      })  
       .catch((err) => {
@@ -32,7 +32,6 @@ const useStore = create((set,get) => ({
   reloadComponent: () => { 
     set({ errorHttp: false })  
     set({ statusMap: false })  
-    console.log('recargando') 
   }, 
   
   getCoordinate : (clickCoordinate)=>{ 
