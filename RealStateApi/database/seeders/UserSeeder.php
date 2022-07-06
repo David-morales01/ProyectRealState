@@ -24,7 +24,8 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'img_user'=>   'default1.png',
                 'remember_token' => Str::random(10),
-                'password' => bcrypt('1234567891')
+                'password' => bcrypt('1234567891'),
+                'rol' => (null)
             ],
         );
             
@@ -36,7 +37,8 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'img_user'=>   'default2.png',
                 'remember_token' => Str::random(10),
-                'password' => bcrypt('1234567891')
+                'password' => bcrypt('1234567891'),
+                'rol' => ('admin')
             ],
         );
         
@@ -48,7 +50,8 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'img_user'=>   'default3.png',
                 'remember_token' => Str::random(10),
-                'password' => bcrypt('1234567891')
+                'password' => bcrypt('1234567891'),
+                'rol' => (null)
             ]
         );
     }

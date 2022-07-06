@@ -36,8 +36,9 @@ const useStore = create((set,get) => ({
   }, 
   
   getCoordinate : (clickCoordinate)=>{ 
-    set({ coordinate: JSON.stringify(clickCoordinate) })  
-console.log(clickCoordinate)
+     //const cd = JSON.stringify(clickCoordinate)
+    set({ coordinate: clickCoordinate})     
+
   },
   ModalCoordinateClose : ()=>{
     set({ coordinate: null })  

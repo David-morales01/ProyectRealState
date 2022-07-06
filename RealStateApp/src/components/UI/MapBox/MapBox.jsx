@@ -33,7 +33,7 @@ export default function MapBox(){
                 style: 'mapbox://styles/mapbox/streets-v11',
             //  center: [-85.28229,12.467416], zoom : 7
             center:[-86.25717043876647,12.126737986671706],
-                zoom: 7  ,attributionControl: true
+                zoom: 13  ,attributionControl: true
             })
                     //  map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
@@ -73,12 +73,17 @@ export default function MapBox(){
                 ).addTo(map.current); 
             })
 
-            map.current.on('click',function(e){ 
-                // setCoordinate(e.lngLat)    quede en hacer el modal :"(
-                //console.log(e.lngLat)
-                // console.log(e.target.dataset.id)
-                mapStore.getCoordinate(e.lngLat)
-            }) 
+            if(user.rol == 'admin'){
+                map.current.on('click',function(e){ 
+                    // setCoordinate(e.lngLat)    quede en hacer el modal :"(
+                    console.log(e.target)
+                    // console.log(e.target.dataset.id)
+                    mapStore.getCoordinate(e.lngLat)
+                
+                }) 
+            }else{
+                console.log('no hay permisos')
+            }
         }   
         else{
             mapStore.getMarkers()
@@ -92,7 +97,7 @@ export default function MapBox(){
             <Box w='100%' h='100%' ref={mapDiv} position='relative'></Box>
 
             {/* <Box position='absolute' pointerEvents='none' inset='0' h='50%' w='50%' transition='6s' bg={bgContainer} opacity={statusMap?'0':'1'}></Box> */}
-             {statusMap? '':<Spinner backGround='rgba(0, 0, 0, 0.2)' />}
+             {statusMap? '':<Spinner backGround='rgba(0, 0, 0, 0.8)' />}
            {coordinate? <FormMarker /> :''}
         </>
     )

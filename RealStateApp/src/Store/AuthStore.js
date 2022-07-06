@@ -87,7 +87,7 @@ const useStore = create(set => ({
         if(resp.message){
           set({ error:  'invalid Token, please try again later' }) 
           localStorage.removeItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
-        }else{ 
+        }else{  
           set({ status: true }) 
           set({ user: resp })  
         }
