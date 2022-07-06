@@ -1,9 +1,9 @@
 import React from 'react'
 import {Flex,Spinner} from '@chakra-ui/react'
 
-export default function LoadingSpinner(){
+export default function LoadingSpinner({backGround}){
     return (
-        <Flex position='absolute' w='100%' h='100%' bg='rgba(0, 0, 0, 0.35)'  justifyContent='center' inset='0' alignItems='center' >
+        <Flex position='absolute' w='100%' h='100%' bg={ backGround? backGround:'rgba(0, 0, 0, 0.35)'}  justifyContent='center' inset='0' alignItems='center' >
            <Spinner 
                 thickness='4px'
                 speed='0.65s'

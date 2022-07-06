@@ -26,7 +26,7 @@ const Map = () => {
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/streets-v11",
+      style: "mapbox://styles/mapbox/navigation-day-v1",
       center: [-87.65, 41.84],
       zoom: 10,
     });

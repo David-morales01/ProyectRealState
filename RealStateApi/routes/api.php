@@ -21,8 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-
-Route::apiResource('markers', MarkerController::class);
+Route::middleware('auth:sanctum')->group(function () { 
+    Route::apiResource('markers', MarkerController::class);
+});
 
 Route::post('register', [AuthController::class,'register']);
 Route::post('login', [AuthController::class,'login']);

@@ -1,11 +1,13 @@
 import create from 'zustand'
 import ky from "ky";
 
-const useStore = create(set => ({
+const useStore = create((set,get) => ({
   loading:false,
   statusHttp:false, 
   statusMap:false, 
   markers:[], 
+  coordinate:null,
+  errorHttp:false,
   getMarkers: async () => {
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
      const resp = ky
@@ -17,19 +19,30 @@ const useStore = create(set => ({
      .then((resp) => { 
         set({ markers: resp }) 
         set({ statusHttp: true }) 
-     })  
-      .catch((err) => {
-          console.log('error')
-      })
-      .finally(()=>{ 
-        console.log('antes del mapa')
-        setTimeout(()=>{
+         setTimeout(()=>{
           set({ statusMap: true }) 
           console.log('aparece mapa ')
-      }, 8000);
-      })
+      }, 14000);
+     })  
+      .catch((err) => {
+        set({ errorHttp: true })   
+        set({ statusMap: true })  
+      }) 
   },
+  reloadComponent: () => { 
+    set({ errorHttp: false })  
+    set({ statusMap: false })  
+    console.log('recargando') 
+  }, 
+  
+  getCoordinate : (clickCoordinate)=>{ 
+    set({ coordinate: JSON.stringify(clickCoordinate) })  
+console.log(clickCoordinate)
+  },
+  ModalCoordinateClose : ()=>{
+    set({ coordinate: null })  
 
+  }
 }))
 
 export default useStore;

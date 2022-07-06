@@ -1,0 +1,49 @@
+.marker {
+    position:relative;  
+    color:black; 
+    width:200px; 
+    text-align: center;
+} 
+.imagesCarousel{
+    overflow:auto;
+    width:200px;
+    height:200px;
+    margin: 20px 0px;
+}
+.imagesCarousel .imagesItems {
+    display:flex;
+    width:200px;
+    height:200px;
+    /*animation: carouselAnimate 10s infinite;*/
+}
+/*
+@keyframes carouselAnimate {
+    0% {margin-left: 0;}
+    20% {margin-left: 0;}
+    25% {margin-left: -100;}
+    45% {margin-left: -100;}
+    50% {margin-left: -200;}
+    70% {margin-left: -200;}
+    75% {margin-left: -300;}
+    100% {margin-left: -300;}
+}
+ /*
+
+.mapboxgl-popup{
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  color:red;
+  background-color: #4CAF50;
+  height: 200px;
+  width: 200px;
+  position:relative;
+}
+
+/* .mapboxgl-popup >div{
+    position:absolute;
+    inset: 0;
+    background-color: blue;
+    height: 200px;
+    width: 200px;
+
+} */

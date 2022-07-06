@@ -1,10 +1,12 @@
 import React,{useEffect} from 'react' 
-import {Flex,useMediaQuery} from '@chakra-ui/react'
+import {Flex,Box,useMediaQuery} from '@chakra-ui/react'
 import {Navigate} from 'react-router-dom'
 import Header from '../UI/Header/Header'
 import Sidebar from '../UI/Sidebar/Sidebar' 
-import MapBox from '../UI/MapBox/MapBox' 
+import MapBox from '../UI/MapBox/MapBox'   
+import MapBoxError from '../UI/MapBox/MapBoxError'
 import AuthStore from '../../Store/AuthStore' 
+import MapStore from '../../Store/MapStore' 
 import Spinner from '../UI/Spinner/Spinner'
 
 export default function Home(){
@@ -12,6 +14,7 @@ export default function Home(){
     const auth = AuthStore()
     const loading = AuthStore(state => state.loading) 
     const status = AuthStore(state => state.status) 
+    const errorHttp = MapStore(state => state.errorHttp)
  
     useEffect(()=>{
         if(!loading){
@@ -40,7 +43,9 @@ export default function Home(){
                     <Header/> 
                     <Flex w='100%' h='100%'> 
                         {desktopView?<Sidebar/>:''}
-                         <MapBox/>
+                        <Box position='relative' h='100%' w='100%' > 
+                         {errorHttp ? <MapBoxError/> :<MapBox/>}
+                        </Box>
                     </Flex>
                 </Flex>
             )

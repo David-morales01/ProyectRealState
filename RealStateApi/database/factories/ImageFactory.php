@@ -17,7 +17,7 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
-        $image= 'imgMarker'. rand(1,6) . '.png';
+        $image= 'imgMarker'. rand(1,5) . '.png';
         return [
             
             'marker_id' => Marker::inRandomOrder()->first()->id,
