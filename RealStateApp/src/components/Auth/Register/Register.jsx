@@ -18,7 +18,8 @@ export default function Login() {
     const bgborder = useColorModeValue('#f9cc1c,#eddc98,transparent 100%', '#facc14,#bb9f29,transparent 100%')
 
     // store
-    const auth = AuthStore()  
+    const register = AuthStore((state) => state.register)
+    const restartValues = AuthStore((state) => state.restartValues)
     const status = AuthStore(state => state.status) 
     const disable = AuthStore(state => state.disabled)  
     const error = AuthStore(state => state.error)  
@@ -29,7 +30,7 @@ export default function Login() {
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`) 
 
     useEffect(()=>{
-        if(!status){auth.restartValues()}
+        if(!status){restartValues()}
     },[])
 
 
@@ -78,7 +79,7 @@ export default function Login() {
                             return validateErrors
                             }}
 
-                            onSubmit={values =>{auth.register(values)}}
+                            onSubmit={values =>{register(values)}}
                             
                             >
                             {({errors,touched})=> (

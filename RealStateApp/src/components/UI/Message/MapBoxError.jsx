@@ -8,6 +8,7 @@ export default function MapBoxError(){
     useEffect(()=>{
         setTimeout(()=>{ 
             mStore.reloadComponent()
+            console.log('reload')
         }, 6000);
     },[])
     return(

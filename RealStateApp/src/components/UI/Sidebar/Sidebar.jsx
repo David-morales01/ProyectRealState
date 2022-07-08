@@ -4,12 +4,11 @@ import MenuOptions from '../MenuOptions/MenuOptions'
 
 export default function Sidebar(){
 
-    const bgSidebar = useColorModeValue('bg.sidebarLight', 'bg.iconDark') 
+    const bgSidebar = useColorModeValue('bg.sidebarLight', 'bg.sidebarDark') 
 
     return ( 
-        <Flex w='70px' px='10px' opacity='0.4' transition='1s' className='sidebarContent' overflow='hidden' py='10px' bg={bgSidebar} flexDirection='column' flexWrap='no-wrap' _hover={{ transition : '2s', width:'400px', opacity:'1'}}> 
-           
-           <MenuOptions/>
+        <Flex position='relative' h='100%' w='70px'  opacity='0.4' transition='1s' className='sidebarContent' overflow='hidden' bg={bgSidebar} flexDirection='column' _hover={{ transition : '2s', width:'400px', opacity:'1'}}> 
+           <MenuOptions/> 
        </Flex>  
     )
 }

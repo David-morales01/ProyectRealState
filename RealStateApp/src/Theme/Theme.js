@@ -14,17 +14,21 @@ const Theme = extendTheme({
       headerLight :'#3347d3',
       headerDark :'#3347d3',   
       sidebarLight :'#ffffff',
-      sidebarDark :'#3347d3',  
+      sidebarDark :'#1a202c',  
     },
     color:{ 
       linkLight:'#5a5fdf',
       linkDark:'#5D62FF', 
+      iconSearchLight:'#5a5fdf',
+      iconSearchDark:'#000000',  
       iconLight:'#5a5fdf',
       iconDark:'#ffffff', 
       errorLight:'#FF655D',
       errorDark:'#F1291F',
       borderLight:'rgb(229 231 235 / 1)',
       borderDark:'rgb(55 65 81 / 1)', 
+      colorTextLight:'#000000',
+      colorTextDark:'#FFFFFF'
     }, 
   },
 

@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     { 
         
         $this->call(UserSeeder::class); 
+        $this->call(BusinessTypeSeeder::class); 
         $this->call(MarkerSeeder::class); 
 
         \App\Models\Image::factory(10)->create();

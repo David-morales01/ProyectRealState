@@ -18,6 +18,9 @@ class Marker extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function business_types(){
+        return $this->belongsTo(BusinessTypes::class);
+    }
     public function images() {
         return $this->hasMany(Image::class);
     }

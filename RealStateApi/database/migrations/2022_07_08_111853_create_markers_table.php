@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('lat');
             $table->string('long');
             $table->boolean('status');
-            $table->foreignId('type_id')->constrained();
+            $table->foreignId('business_types_id')->constrained();
             $table->timestamps();
         });
     }

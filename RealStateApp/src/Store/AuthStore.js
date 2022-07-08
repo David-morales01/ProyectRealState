@@ -98,7 +98,7 @@ const useStore = create(set => ({
         set({ status: false }) 
         console.log('error : ',err)
       })
-      .finally(()=>{
+      .finally(()=>{  
         set({ loading: true })  
        })
        
@@ -115,7 +115,6 @@ const useStore = create(set => ({
   },
   ErrorClose : ()=>{
     set(state => ({error: false }) )
-
   }
 }))
 

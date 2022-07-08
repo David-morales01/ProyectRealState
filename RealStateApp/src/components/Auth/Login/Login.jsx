@@ -19,8 +19,9 @@ export default function Login() {
     const bgborder = useColorModeValue('#f9cc1c,#eddc98,transparent 100%', '#facc14,#bb9f29,transparent 100%')
 
 
-    // store
-    const auth = AuthStore()  
+    // store 
+    const login = AuthStore((state) => state.login)
+    const restartValues = AuthStore((state) => state.restartValues)
     const status = AuthStore(state => state.status) 
     const disable = AuthStore(state => state.disabled)  
     const error = AuthStore(state => state.error) 
@@ -34,7 +35,7 @@ export default function Login() {
  
     
     useEffect(()=>{
-        if(!status){auth.restartValues()}
+        if(!status){restartValues()}
     },[])
 
 
@@ -55,7 +56,7 @@ export default function Login() {
                     <Box position='relative' borderColor={borderColor} borderWidth= '1px' backgroundColor={bgContainer} px='30px' pt='4' pb='8' w='100%' borderRadius='20px' _before={{ position:'absolute', content: '""', width:'80%', height:'1px', backgroundImage:`radial-gradient(circle at top , ${bgborder})`, insetBlock:'-1px', insetInline:'10%'  }}>
                         <Formik
                             initialValues={{ 
-                                email:'davidmorales@gmail.com',
+                                email:'enriquecajina@gmail.com',
                                 password:'1234567891',
                             }}
 
@@ -77,7 +78,7 @@ export default function Login() {
                             return validateErrors
                             }}
 
-                            onSubmit={values =>{auth.login(values)}}
+                            onSubmit={values =>{login(values)}}
                             
                             >
                             {({errors,touched})=> (
@@ -140,7 +141,6 @@ export default function Login() {
                 </Box> 
             </Flex> 
         )
-         
     }
     
      

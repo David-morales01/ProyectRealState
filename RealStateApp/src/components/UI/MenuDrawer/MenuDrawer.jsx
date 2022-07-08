@@ -1,5 +1,5 @@
 import React from 'react'  
-import {Drawer,DrawerBody,useDisclosure,DrawerOverlay,DrawerContent,MenuItem } from '@chakra-ui/react' 
+import {Drawer,DrawerBody,useDisclosure,DrawerOverlay,DrawerContent,MenuItem,useColorModeValue } from '@chakra-ui/react' 
 import MenuOptions from '../MenuOptions/MenuOptions' 
 // import {MenuIcon} from '../Icons/Icons' 
 
@@ -7,13 +7,15 @@ export default function MenuDrawer() {
 
   // cosas de chakra
   const { isOpen, onOpen, onClose } = useDisclosure() 
+  // Theme
+  const bgMenu = useColorModeValue('bg.sidebarLight', 'bg.sidebarDark') 
 
   return (
     <> 
-      <Drawer placement='left' onClose={onClose}   isOpen={isOpen}  >
+      <Drawer placement='left' onClose={onClose}    isOpen={isOpen} w='340px'  >
         <DrawerOverlay/>
-        <DrawerContent> 
-          <DrawerBody py='50px'>
+        <DrawerContent w='340px'> 
+          <DrawerBody py='10px' overflow='hidden' bg={bgMenu} position='relative' w='340px'>
             <MenuOptions/>
           </DrawerBody>
         </DrawerContent>
