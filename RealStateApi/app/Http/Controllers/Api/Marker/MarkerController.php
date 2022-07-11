@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Marker;
 use App\Models\Image;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth; 
+use App\Http\Resources\MarkerResource;
+
 class MarkerController extends Controller
 {
     /**
@@ -28,7 +31,27 @@ class MarkerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $auth_id = Auth::id();
+        $data = $request->validate(
+            [
+                'title'=>['required'], 
+                'description'=>['required'], 
+                'room'=>['required'], 
+                'toilet'=>['required'], 
+                'price'=>['required'], 
+                'long'=>['required'], 
+                'lat'=>['required'], 
+                'business_types_id'=>['required'], 
+            ]
+        );
+        $data['user_id'] = $auth_id ;
+        $data['status'] = false;
+        $marker = Marker::create($data)->fresh();
+        // $marker->load('images');
+        
+        return MarkerResource::make($marker);
+
+         
     }
 
     /**

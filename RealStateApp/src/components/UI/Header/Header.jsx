@@ -1,10 +1,10 @@
 import React from 'react'
-import {Flex,Box,Button,useColorModeValue,Text,useMediaQuery,Avatar,AvatarBadge,Menu,MenuButton,MenuList,MenuItem} from '@chakra-ui/react'
+import {Flex,useColorModeValue,Text,useMediaQuery,Avatar,AvatarBadge,Menu,MenuButton,MenuList,MenuItem} from '@chakra-ui/react'
 import MenuDrawer from '../MenuDrawer/MenuDrawer'
 import AuthStore from '../../../Store/AuthStore'  
 import MapStore from '../../../Store/MapStore' 
 import ColorModoText from '../ColorModeSwitcher/ColorModoText'  
-import { ChevronDownIcon, AddIcon, WarningIcon } from '@chakra-ui/icons'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 
 export default function Header(){
     
@@ -21,11 +21,11 @@ export default function Header(){
     const bgHeader = useColorModeValue('bg.headerLight', 'bg.headerDark')
     return (
         <Flex color='white'  bg={bgHeader} w='100%' h='70px' justify='space-between' align='center' px='30px'>
-            <Box h='40px' >
-                <Text position='relative' insetBlock='-12px' fontSize='40px' fontWeight='bold'>
+            <Flex h='40px' align='center' >
+                <Text position='relative'   fontSize={desktopView?'40px':'20px'} fontWeight='bold'>
                     Real Estate
                 </Text>
-            </Box>  
+            </Flex>  
             <Flex columnGap='6px' align='center'>
                  
                 <Avatar  name={user.name} src={`${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/users/${user.img_user}`} /> 

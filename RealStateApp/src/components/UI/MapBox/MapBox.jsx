@@ -17,6 +17,9 @@ export default function MapBox(){
     const statusHttp = MapStore(state => state.statusHttp)
     const markers = MapStore(state => state.markers)
     const coordinate = MapStore(state => state.coordinate)
+    const listMarkers = MapStore(state => state.listMarkers)
+    const changeStatusHttp = MapStore((state) => state.changeStatusHttp)
+    const changeListMarkers = MapStore((state) => state.changeListMarkers)
 
     // MapBox
     const mapDiv =useRef(null)
@@ -24,77 +27,87 @@ export default function MapBox(){
     // Token
     mapboxgl.accessToken = `${import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN}` 
 
-     useEffect(()=>{ 
-        if(statusHttp){ 
-            map.current = new Map({
-                container: mapDiv.current,
-                style: 'mapbox://styles/mapbox/streets-v11',
-            //  center: [-85.28229,12.467416], zoom : 7
+    useEffect(()=>{  
+        if(markers.length<1){
+            console.log('getMarkers')
+            mapStore.getMarkers() 
+        }
+    },[]) 
+
+useEffect(()=>{  
+    if(statusHttp){ 
+        console.log('loading map')
+        map.current = new Map({
+            container: mapDiv.current,
+            style: 'mapbox://styles/mapbox/streets-v11',
+            //center: [-85.28229,12.467416], zoom : 7,
             center:[-86.25717043876647,12.126737986671706],
-                zoom: 13  ,attributionControl: false
-            })
-            const nav = new mapboxgl.NavigationControl({
-                visualizePitch: false
-            }); 
+            zoom: 13  ,
+            attributionControl: false
+        })
+        const nav = new mapboxgl.NavigationControl({
+            visualizePitch: false
+        }); 
                     
-            map.current.addControl(nav, 'top-right');  
+        map.current.addControl(nav, 'top-right');  
 
-            if(user.rol == 'admin'){
-                map.current.on('click',function(e){ 
-                    mapStore.getCoordinate(e.lngLat)
-                }) 
-            }
-        }   
-        else{
-            mapStore.getMarkers()
+        if(user.rol == 'admin'){
+            map.current.on('click',function(e){ 
+                mapStore.getCoordinate(e.lngLat)
+            }) 
         }
-    },[statusHttp]) 
+        //listMarkers(markers,user,map)
+        changeStatusHttp()
+        changeListMarkers()
+    }
+},[statusHttp]) 
 
-    useEffect(()=>{
-       
-        if(markers == 'null markers'){
-            console.log('no hay perro')
-        }else{
-             if(markers){
-            //     const removeMarker = new mapboxgl.Marker().addTo(map);
-            //     removeMarker.remove();
-                
-                markers.map((marker)=>{  
-                    let imgMarker =''
-                    marker.images.forEach((img)=>{
-                        imgMarker = imgMarker + `<img src='${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/markers/${img.src_img}' class='img' /> `
-                    }
-                    )
-                    let markerColor = '#4671FF';
-                    if(user.id == marker.user_id){
-                        markerColor ='#FF3333'
-                    }
-                    const arrCoordinate = [marker.long,marker.lat]
-                    new mapboxgl.Marker({ color: markerColor,fontSize:'90px' }).setLngLat(arrCoordinate)
-                    .setPopup(
-                        new mapboxgl.Popup({ offset: 25 }) // add popups
-                        .setHTML(
-                            `<div class='marker'> 
-                                <h1 class'title'> ${marker.title}</h1> 
-                                 <div class='imagesCarousel'>
-                                    <div class='imagesItems'>${imgMarker}</div>
-                                 </div>
-                                <p class'description'> ${marker.description}</p> 
-                            </div>`
-                        )
-                    ).addTo(map.current); 
-                })
+ useEffect(()=>{ 
+    const removeMarker = document.querySelectorAll('.mapboxgl-marker')
+    if(removeMarker){
+        removeMarker.forEach(function(marker) {
+            marker.remove();
+        });
+    }
+console.log('cargando datos en el mapa')
+        
+    if(markers.length <1 && listMarkers ==true){
+        console.log('no hay :n')
+    }else if(listMarkers){ 
+        markers.map((marker)=>{  
+            let imgMarker =''
+            marker.images.forEach((img)=>{
+                imgMarker = imgMarker + `<img src='${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/markers/${img.src_img}' class='img' /> `
             }
-        }
-
-    },[markers,statusMap])
+            )
+            let markerColor = '#4671FF';
+            if(user.id == marker.user_id){
+                markerColor ='#FF3333'
+            }
+            const arrCoordinate = [marker.long,marker.lat]
+            new mapboxgl.Marker({ color: markerColor,fontSize:'90px' }).setLngLat(arrCoordinate)
+            .setPopup(
+                new mapboxgl.Popup({ offset: 25 }) // add popups
+                .setHTML(
+                    `<div class='marker'> 
+                        <h1 class'title'> ${marker.title}</h1> 
+                         <div class='imagesCarousel'>
+                            <div class='imagesItems'>${imgMarker}</div>
+                         </div>
+                        <p class'description'> ${marker.description}</p> 
+                    </div>`
+                )
+            ).addTo(map.current); 
+        })
+             
+    } 
+ },[markers])
 
     return (
         <>
-            <Box w='100%' h='100%'  ref={mapDiv} position='relative' className='cursorRancio'></Box>
-            {/* <Box position='absolute' pointerEvents='none' inset='0' h='50%' w='50%' transition='6s' bg={bgContainer} opacity={statusMap?'0':'1'}></Box> */}
+            <Box w='100%' h='100%'  ref={mapDiv} position='relative'></Box>
             {statusMap? '':<Spinner backGround='rgba(0, 0, 0, 0.9)' />}
-            {coordinate? <FormMarker /> :''}
+            {coordinate? <FormMarker /> :''} 
         </>
     )
 }
@@ -112,4 +125,4 @@ revisar :   https://docs.mapbox.com/mapbox-gl-js/api/markers/#popup.event:close
             https://docs.mapbox.com/mapbox-gl-js/example/drag-a-marker/
             https://docs.mapbox.com/mapbox-gl-js/example/popup-on-hover/
 
- */
+*/

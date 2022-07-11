@@ -26,39 +26,6 @@ export default function Home(){
     // media query
     const [desktopView] = useMediaQuery('(min-width: 800px)') 
 
-    /*
-    if(!loading){
-        return(
-            <Flex  w='100vw' h ='100vh' minW='360' poaition='relative'>
-                <Spinner/>
-            </Flex>
-        )
-    }
-
-    if(loading){  
-
-        if(status){ 
-            return (
-                <Flex  w='100vw' h ='100vh' minW='360px' flexDirection='column'>
-                    <Header/> 
-                    <Flex w='100%' h='100%'> 
-                        {desktopView?<Sidebar/>:''}
-                        <Box position='relative' h='100%' w='100%' > 
-                         {errorHttp ? <MapBoxError/> :<MapBox/>}
-                        </Box>
-                    </Flex>
-                </Flex>
-            )
-        }else{
-            
-            return (
-                <>
-                    <Navigate to="/login"/> 
-                </>
-            ); 
-        }
-    }*/
-
     if(loading){  
         if(status){ 
             return (
@@ -67,7 +34,7 @@ export default function Home(){
                     <Flex  h='100%'> 
                         {desktopView?<Sidebar/>:''}
                          <Box position='relative' h='100%' w='100%' > 
-                          {/* {errorHttp ? <MapBoxError/> :<MapBox/>} */}
+                          {errorHttp ? <MapBoxError/> :<MapBox/>}
                         </Box> 
                     </Flex>
                 </Flex>
