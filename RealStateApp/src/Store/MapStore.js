@@ -30,7 +30,7 @@ const useStore = create((set,get) => ({
       set({ listMarkers: true })   
         setTimeout(()=>{
         set({ statusMap: true })  
-      }, 8000);
+      }, 2000);
      })  
       .catch((err) => {
         set({ errorHttp: true })   
@@ -117,13 +117,13 @@ const useStore = create((set,get) => ({
       headers: {
         Authorization: `Bearer ${accessToken}`
       },json: values
-     }).json().then((resp)=>{
+     }).json()
+     .then((resp)=>{ 
       
     const markers = get().allMarkers
-    markers.push(resp.data)
+    markers.push(resp.data) 
     set({ markers: markers}) 
     set({ allMarkers: markers})
-    set({ listMarkers: true}) 
     set({ coordinate: null })  
     console.log(markers)
     })

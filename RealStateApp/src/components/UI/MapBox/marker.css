@@ -17,9 +17,6 @@
     overflow: auto;
     /*animation: carouselAnimate 10s infinite;*/
 }
-.cursorRancio{
-    cursor:url('https://i.postimg.cc/8zcXShKM/FB-IMG-1648755009698.jpg'),auto;
-}
 /*
 @keyframes carouselAnimate {
     0% {margin-left: 0;}

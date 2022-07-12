@@ -47,7 +47,7 @@ class MarkerController extends Controller
         $data['user_id'] = $auth_id ;
         $data['status'] = false;
         $marker = Marker::create($data)->fresh();
-        // $marker->load('images');
+        $marker->load('images');
         
         return MarkerResource::make($marker);
 

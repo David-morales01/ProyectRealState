@@ -29,7 +29,7 @@ export default function FormMarker() {
                   long:coordinate.lng,
                   lat:coordinate.lat ,
                   business_types_id: 0,
-                  images:null
+                  images:''
                 }}
 
                 validate={(values)=>{
