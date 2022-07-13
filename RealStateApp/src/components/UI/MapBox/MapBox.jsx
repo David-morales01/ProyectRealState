@@ -52,8 +52,9 @@ useEffect(()=>{
         map.current.addControl(nav, 'top-right');  
 
         if(user.rol == 'admin'){
-            map.current.on('click',function(e){ 
+            map.current.on('click',function(e){  
                 mapStore.getCoordinate(e.lngLat)
+                console.log(e.lngLat)
             }) 
         }
         //listMarkers(markers,user,map)

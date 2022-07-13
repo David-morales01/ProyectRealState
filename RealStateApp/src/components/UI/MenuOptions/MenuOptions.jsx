@@ -17,6 +17,10 @@ export default function MenuOptions(){
                 w:'100%',
                 h:'60px', 
             },
+            '.itemButtons>div>button:hover':{
+                bg:'#3347D2',
+                color:'#ffffff',
+            }, 
             '.active':{
                 bg:'#3347D2',
                 color:'#ffffff',

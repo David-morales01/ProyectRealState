@@ -10,6 +10,7 @@ export default function FormMarker() {
   const saveCoordinate = MapStore((state) => state.saveCoordinate)
   const coordinate = MapStore(state => state.coordinate)
 
+  console.log(coordinate)
   // Theme
   const errorText = useColorModeValue('color.errorLight', 'color.errorDark')
  
@@ -169,9 +170,9 @@ export default function FormMarker() {
                           <input type='file' multiple name="images"
                           
                            onChange={(e) => {
-                            setFieldValue("images", e.currentTarget.files[0])
-                            console.log(e)
-                            console.log('xd')
+                            setFieldValue("images", e.currentTarget.files)
+                            // console.log(e)
+                            // console.log('xd')
                          // }}
                          // setFieldValue("images", event.currentTarget.files[0]);}}
                           

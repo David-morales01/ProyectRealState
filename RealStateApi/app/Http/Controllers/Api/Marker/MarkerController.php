@@ -9,6 +9,9 @@ use App\Models\Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth; 
 use App\Http\Resources\MarkerResource;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
 
 class MarkerController extends Controller
 {
@@ -42,15 +45,29 @@ class MarkerController extends Controller
                 'long'=>['required'], 
                 'lat'=>['required'], 
                 'business_types_id'=>['required'], 
+                'images' => ['required']
             ]
         );
         $data['user_id'] = $auth_id ;
         $data['status'] = false;
+        $imageList = $request->file('images');
+        unset($data['images']);
         $marker = Marker::create($data)->fresh();
+       /* logger([
+            'images' => $imageList
+        ]);*/
+
+        /** @var UploadedFile $image */
+        foreach($imageList ?? [] as $image){
+            
+            $newImage['marker_id']= $marker->id; 
+            $newImage['src_img']=  Str::slug($image->getClientOriginalName());  
+            $image->store('images/markers','public');
+            $temp = Image::create($newImage); 
+        }
         $marker->load('images');
         
-        return MarkerResource::make($marker);
-
+        return MarkerResource::make($marker); 
          
     }
 
