@@ -58,14 +58,10 @@ const useStore = create((set,get) => ({
   changeStatusHttp: () => set(state => ({ statusHttp: false })), 
   clickEventMap: () => set(state => ({ clickMap: !state.clickMap })), 
   filterMap : (key,value)=>{
-    console.log('filtrando los ', key, ' iguales a ', value )
-    set({ listMarkers: false}) 
+    //console.log('filtrando los ', key, ' iguales a ', value ) 
     let filterMarkers = get().allMarkers
     const filtervalues = get().filterValues 
-    if(key == 'price'){
-      console.log('denegado')
-      return ;
-    } 
+   
     if(filtervalues[key] != value){
       filtervalues[key]=value
     }else{
@@ -78,8 +74,15 @@ const useStore = create((set,get) => ({
       const value = f[1] 
       if(value != null){ 
         switch(key){
-          case 'title':
-            filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
+          case 'title': 
+            filterMarkers =filterMarkers.filter(valueF => {
+              let title = valueF[key]
+              title =title.toLowerCase()
+              const valueComp =value.toLowerCase()
+              if(title.includes(valueComp)){ 
+                return valueF
+              } 
+            })
           break;
           case 'business_types_id':
             filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
@@ -103,14 +106,18 @@ const useStore = create((set,get) => ({
           break;
         }
       } 
-    })
+    }) 
+    set({ listMarkers: true}) 
 
     set({ filterValues: filtervalues}) 
-    set({ markers: filterMarkers}) 
-    console.log(filterMarkers) 
-    set({ listMarkers: true}) 
+    set({ markers: filterMarkers})  
   },
   saveCoordinate: async(values)=>{
+    set({ listMarkers: true}) 
+    set({ markers: []})
+    console.log('guardando datos')
+    
+    const listAllMarkers = get().allMarkers
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
      const resp = ky
      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/markers`, {
@@ -120,13 +127,16 @@ const useStore = create((set,get) => ({
      }).json()
      .then((resp)=>{ 
       
-    const markers = get().allMarkers
-    markers.push(resp.data) 
-    set({ markers: markers}) 
-    set({ allMarkers: markers})
-    set({ coordinate: null })  
-    console.log(markers)
-    })
+    listAllMarkers.push(resp.data)  
+      console.log('antes')
+    }) 
+    .finally(()=>{
+      set({ markers: listAllMarkers})
+      console.log('despues')
+      set({ allMarkers: listAllMarkers})
+      set({ coordinate: null }) 
+      console.log(listAllMarkers) 
+    }) 
   }
 }))
 

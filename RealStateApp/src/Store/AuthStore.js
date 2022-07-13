@@ -112,6 +112,7 @@ const useStore = create(set => ({
     logOut:  () => {
       localStorage.removeItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
       set({ status: false })
+      set({ user: null })
   },
   ErrorClose : ()=>{
     set(state => ({error: false }) )

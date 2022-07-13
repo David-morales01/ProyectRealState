@@ -29,7 +29,7 @@ export default function FormMarker() {
                   long:coordinate.lng,
                   lat:coordinate.lat ,
                   business_types_id: 0,
-                  images:''
+                  images:[]
                 }}
 
                 validate={(values)=>{
@@ -74,7 +74,7 @@ export default function FormMarker() {
                   }}
 
                 onSubmit={values =>{saveCoordinate(values)}} >
-                {({errors,touched})=> (
+                {({errors,touched,setFieldValue})=> (
                 <Form>  
                   <FormControl h='132px' isInvalid={errors.title && touched.title}> 
                       <FormLabel>Title</FormLabel>
@@ -164,14 +164,22 @@ export default function FormMarker() {
                     </Flex> 
                     <FormControl isInvalid={errors.images && touched.images}> 
                         <FormLabel>images</FormLabel>
-                        <FastField   name="images"> 
-                          {({field,meta})=>(<Input type='file' multiple {...field} 
+                        {/* /*<FastField   name="images"> 
+                         // {({field,meta})=>( */}
+                          <input type='file' multiple name="images"
                           
-                          // onChange={(event) => {
-                          //   setFieldValue("images", event.currentTarget.files[0]);}}
+                           onChange={(e) => {
+                            setFieldValue("images", e.currentTarget.files[0])
+                            console.log(e)
+                            console.log('xd')
+                         // }}
+                         // setFieldValue("images", event.currentTarget.files[0]);}}
                           
-                          />)}
-                        </FastField>   
+                          
+                          }}/>
+                          {/* //)}
+                        
+                        //</FastField>    */}
                         {touched.images && errors.images ? 
                           <Text my='2' fontSize="14px" color={errorText}>{errors.images} </Text> :''
                         }  

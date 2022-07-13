@@ -16,10 +16,8 @@ export default function Home(){
     const status = AuthStore(state => state.status) 
     const errorHttp = MapStore(state => state.errorHttp)
  
-    useEffect(()=>{
-        if(!loading){
-            validateUser()  
-        }
+    useEffect(()=>{ 
+        validateUser()  
     },[])
     
     
