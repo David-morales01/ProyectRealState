@@ -22,6 +22,6 @@ export default function MapBoxOptions(){
             {user.rol == 'admin' ? <MenuItem><Link to='/allUser'>Users</Link></MenuItem> : ''}              
             {desktopView? '':<MenuDrawer/> }
             {user.rol == 'admin' ? <MenuItem onClick={clickEventMap}>{clickMap? 'Cancel add Marker' : 'New Marker'}</MenuItem> : ''} 
-              </>
+        </>
     )
 }

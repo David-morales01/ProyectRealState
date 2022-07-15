@@ -18,16 +18,23 @@
     background-color: rgb(177, 177, 177);
 }
 .carousel{ 
-    overflow:auto; 
     width:200px;
     height:200px; 
 }
 .carousel-items{  
+    display:flex;
     overflow:hidden; 
     position:relative; 
     width:200px;
-    height:200px;   
-}
+    height:200px; 
+}  
+/*
+  
+
+
+
+
+/*
 .carousel-items .image{  
     position:relative;
     min-width:200px; 

@@ -7,7 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import Spinner from '../Spinner/Spinner' 
 import FormMarker from '../Modal/FormMarker'
 import ErrorMarker from '../Message/ErrorMarker'
-import './marker.css'
+import './marker.scss'
 
 export default function MapBox(){ 
 
@@ -34,11 +34,6 @@ export default function MapBox(){
             console.log('getMarkers')
             mapStore.getMarkers() 
         }
-    },[]) 
-
-useEffect(()=>{  
-    if(statusHttp){ 
-        console.log('loading map')
         map.current = new Map({
             container: mapDiv.current,
             style: 'mapbox://styles/mapbox/streets-v11',
@@ -59,8 +54,7 @@ useEffect(()=>{
             }) 
         } 
         changeListMarkers()
-    }
-},[statusHttp]) 
+},[]) 
 
  useEffect(()=>{ 
     const removeMarker = document.querySelectorAll('.mapboxgl-marker')
@@ -68,8 +62,7 @@ useEffect(()=>{
         removeMarker.forEach(function(marker) {
             marker.remove();
         });
-    }
-    console.log('cargando datos en el mapa')
+    } 
         
     if(markers.length <1 && listMarkers ==true){
         console.log('no hay :n')

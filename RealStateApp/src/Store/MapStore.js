@@ -58,7 +58,7 @@ const useStore = create((set,get) => ({
   ErrorClose : ()=>{
     set(state => ({error: false }) )
   },
-  changeListMarkers: () => set(state => ({ listMarkers: !state.listMarkers })),
+  changeListMarkers: () => set(state => ({ listMarkers: true})),
   changeStatusHttp: () => set(state => ({ statusHttp: false })),
   clickEventMap: () => set(state => ({ clickMap: !state.clickMap })),
   filterMap : (key,value)=>{
