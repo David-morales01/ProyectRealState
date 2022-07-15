@@ -63,8 +63,10 @@ class MarkerController extends Controller
                 'images' => $imageList
             ]); 
             $newImage['marker_id']= $marker->id; 
-            $newImage['src_img']=  Str::slug($image->getClientOriginalName());  
-            $image->store('images/markers','public');
+            // $image->store('images/markers','public'); 
+            $tempImage= $image->store('images/markers','public');
+          
+            $newImage['src_img']=  $tempImage;  
             $temp = Image::create($newImage); 
         }
         $marker->load('images');

@@ -25,7 +25,7 @@ const useStore = create((set,get) => ({
       set({ allMarkers: resp })
       set({ markers: resp })
       if(resp.length <1){
-        console.log('no hay')
+        set({ error: true}) 
       }
       set({ statusHttp: true })
       set({ listMarkers: true })
@@ -122,12 +122,15 @@ const useStore = create((set,get) => ({
 
     set({ filterValues: filtervalues})
     set({ markers: filterMarkers})
+    if(filterMarkers.length <1){
+      set({ error: true})
+    }else{
+      set({ error: false})
+
+    }
   },
   saveCoordinate: async(values)=>{
-    set({ listMarkers: true})
-    set({ markers: []})
-    console.log('guardando datos')
-    console.log(values)
+    set({ markers: 'null'})
     let formData = new FormData();
     formData.append('title', values.title)
     formData.append('description', values.description)
@@ -137,8 +140,6 @@ const useStore = create((set,get) => ({
     formData.append('long', values.long)
     formData.append('lat', values.lat)
     formData.append('business_types_id', values.business_types_id)
-
-    console.log(values.images) 
 
     for (var i = 0; i < values.images.length; i++) { 
       formData.append('images[]', values.images[i])
@@ -154,14 +155,14 @@ const useStore = create((set,get) => ({
      }).json()
      .then((resp)=>{
 
-     listAllMarkers.push(resp.data)
-      console.log(resp.data)
+     listAllMarkers.push(resp.data) 
     })
     .finally(()=>{
-       set({ markers: listAllMarkers})
+      set({ listMarkers: true})  
+      set({ markers: listAllMarkers})
       // console.log('despues')
-      // set({ allMarkers: listAllMarkers})
-      // set({ coordinate: null })
+       set({ allMarkers: listAllMarkers})
+       set({ coordinate: null })
       // console.log(listAllMarkers)
     })
   }

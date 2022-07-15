@@ -10,7 +10,7 @@ export default function ErrorMessage({error}) {
     useEffect(()=>{ 
         setTimeout (()=>{ 
             ErrorClose()
-        },10000);
+        },6000);
     },[])
 
     return isVisible ? (
@@ -19,9 +19,9 @@ export default function ErrorMessage({error}) {
                 <Flex justifyContent='center' w='90%'>
                     <AlertIcon position='relative' />
                     
-                    <AlertTitle>warning!</AlertTitle>
+                    <AlertTitle> No markers Available</AlertTitle>
                     <AlertDescription>
-                        {error}
+                       
                     </AlertDescription>
                 </Flex> 
             </Alert>

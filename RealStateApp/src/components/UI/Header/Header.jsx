@@ -29,7 +29,7 @@ export default function Header(){
             </Flex>  
             <Flex columnGap='6px' align='center'>
                  
-                <Avatar  name={user.name} src={`${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/users/${user.img_user}`} /> 
+                <Avatar  name={user.name} src={`${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/users/${user.img_user}`} />
                  
                 <Flex align='center'  columnGap='4px'>
                     {user.name}
@@ -39,8 +39,8 @@ export default function Header(){
                         </MenuButton>
                         <MenuList color={colorText}> 
                             { route == 'perfil' ?<UserOptions/>:<MapBoxOptions/>} 
-                            <MenuItem onClick={logOut}>Log Out</MenuItem> 
                             <ColorModoText/>
+                            <MenuItem onClick={logOut}>Log Out</MenuItem>  
                         </MenuList>
                     </Menu> 
                 </Flex>

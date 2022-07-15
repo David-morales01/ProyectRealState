@@ -71,7 +71,6 @@ const useStore = create(set => ({
     
   },
   validateUser: async () => {  
-    set({ status: null })
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
     
     if(accessToken){
@@ -85,9 +84,11 @@ const useStore = create(set => ({
         if(resp.message){
           set({ error:  'invalid Token, please try again later' }) 
           localStorage.removeItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
+          set({ status: false }) 
         }else{  
           set({ status: true }) 
           set({ user: resp })  
+          console.log(resp)
         }
       })
       .catch((err) => {

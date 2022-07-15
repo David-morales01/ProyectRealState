@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import {Box,Checkbox,Flex,Text,Input,FormControl,FormHelperText,FormLabel,useColorModeValue,Button} from '@chakra-ui/react'
+import {Box,Flex,Text,Input,FormControl,FormHelperText,FormLabel,useColorModeValue,Button} from '@chakra-ui/react'
 import {FastField, Form, Formik} from 'formik' 
 import {useNavigate, Link,Navigate} from 'react-router-dom' 
 import {ColorModeSwitcher} from '../../UI/ColorModeSwitcher/ColorModeSwitcher' 

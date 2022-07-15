@@ -6,6 +6,7 @@ import AuthStore from '../../../Store/AuthStore'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Spinner from '../Spinner/Spinner' 
 import FormMarker from '../Modal/FormMarker'
+import ErrorMarker from '../Message/ErrorMarker'
 import './marker.css'
 
 export default function MapBox(){ 
@@ -18,6 +19,7 @@ export default function MapBox(){
     const markers = MapStore(state => state.markers)
     const coordinate = MapStore(state => state.coordinate)
     const listMarkers = MapStore(state => state.listMarkers)
+    const error = MapStore(state => state.error)
     const changeStatusHttp = MapStore((state) => state.changeStatusHttp)
     const changeListMarkers = MapStore((state) => state.changeListMarkers)
 
@@ -53,8 +55,7 @@ useEffect(()=>{
 
         if(user.rol == 'admin'){
             map.current.on('click',function(e){  
-                mapStore.getCoordinate(e.lngLat)
-                console.log(e.lngLat)
+                mapStore.getCoordinate(e.lngLat) 
             }) 
         } 
         changeListMarkers()
@@ -78,7 +79,7 @@ useEffect(()=>{
             const lengthImage = marker.images.length
             
             marker.images.forEach((img)=>{
-                imgMarker = imgMarker + `<div class='image'><img src='${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/markers/${img.src_img}'/ alt='img'></div>`
+                imgMarker = imgMarker + `<div class='image'><img src='${import.meta.env.VITE_REACT_APP_ROUTE_STORAGE}/${img.src_img}'/ alt='img'></div>`
             }
             )
             let markerColor = '#4671FF';
@@ -112,6 +113,7 @@ useEffect(()=>{
             <Box w='100%' h='100%'  ref={mapDiv} position='relative'></Box>
             {statusMap? '':<Spinner backGround='rgba(0, 0, 0, 0.9)' />}
             {coordinate? <FormMarker /> :''} 
+            {error ? <ErrorMarker/>:''}
         </>
     )
 }

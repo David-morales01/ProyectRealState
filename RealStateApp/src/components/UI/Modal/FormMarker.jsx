@@ -182,8 +182,7 @@ export default function FormMarker() {
                         <input type='file' multiple name="images"
                         
                           onChange={(e) => {
-                          setFieldValue("images", e.currentTarget.files) 
-                            console.log(e.currentTarget.files)
+                          setFieldValue("images", e.currentTarget.files)  
                         
                         }}/>
                         {/* //)}

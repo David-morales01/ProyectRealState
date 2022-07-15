@@ -3,18 +3,28 @@
     color:black; 
     width:200px; 
     text-align: center;
+    padding-block-start: 10px;
 }
-
-.carousel{
-    display:flex; 
+.mapboxgl-popup-close-button{
+    color:black;
+    margin:4px;
+    background-color: rgb(197, 163, 163);
+    padding-inline: 5px;
+    border-radius: 10px;
+    border:0 px;
+}
+.mapboxgl-popup-close-button:hover{
+    color:white; 
+    background-color: rgb(177, 177, 177);
+}
+.carousel{ 
     overflow:auto; 
     width:200px;
     height:200px; 
 }
-.carousel-items{ 
-    overflow:auto; 
-    position:relative;
-    display:flex;  
+.carousel-items{  
+    overflow:hidden; 
+    position:relative; 
     width:200px;
     height:200px;   
 }
@@ -22,7 +32,6 @@
     position:relative;
     min-width:200px; 
     min-height:200px; 
-    display:flex; 
 }
 .image img{
 
