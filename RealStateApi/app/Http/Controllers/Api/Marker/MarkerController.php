@@ -53,13 +53,15 @@ class MarkerController extends Controller
         $imageList = $request->file('images');
         unset($data['images']);
         $marker = Marker::create($data)->fresh();
-       /* logger([
+         logger([
             'images' => $imageList
-        ]);*/
+        ]); 
 
         /** @var UploadedFile $image */
         foreach($imageList ?? [] as $image){
-            
+            logger([
+                'images' => $imageList
+            ]); 
             $newImage['marker_id']= $marker->id; 
             $newImage['src_img']=  Str::slug($image->getClientOriginalName());  
             $image->store('images/markers','public');

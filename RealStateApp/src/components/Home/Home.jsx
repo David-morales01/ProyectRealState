@@ -7,44 +7,47 @@ import MapBox from '../UI/MapBox/MapBox'
 import MapBoxError from '../UI/Message/MapBoxError'
 import AuthStore from '../../Store/AuthStore' 
 import MapStore from '../../Store/MapStore' 
+import RouteStore from '../../Store/RouteStore' 
 import Spinner from '../UI/Spinner/Spinner'
 
 export default function Home(){
     // Store
-    const validateUser = AuthStore((state) => state.validateUser)
-    const loading = AuthStore(state => state.loading) 
+    const validateUser = AuthStore((state) => state.validateUser) 
     const status = AuthStore(state => state.status) 
     const errorHttp = MapStore(state => state.errorHttp)
+    const route = RouteStore(state => state.errorHttp)
+    const ChangeRoute = RouteStore(state => state.ChangeRoute) 
  
     useEffect(()=>{ 
+        ChangeRoute('home')
         validateUser()  
     },[])
     
     
     // media query
     const [desktopView] = useMediaQuery('(min-width: 800px)') 
-
-    if(loading){  
-        if(status){ 
-            return (
-                <Flex w='100vw' h ='100vh' minW='360px' flexDirection='column'>
-                    <Header/> 
-                    <Flex  h='100%'> 
-                        {desktopView?<Sidebar/>:''}
-                         <Box position='relative' h='100%' w='100%' > 
-                          {errorHttp ? <MapBoxError/> :<MapBox/>}
-                        </Box> 
-                    </Flex>
+ 
+    if(status== true){ 
+        return (
+            <Flex w='100vw' h ='100vh' minW='360px' flexDirection='column'>
+                <Header/> 
+                <Flex  h='100%'> 
+                    {desktopView?<Sidebar/>:''}
+                    <Box position='relative' h='100%' w='100%' > 
+                        {errorHttp ? <MapBoxError/> :<MapBox/>}
+                    </Box> 
                 </Flex>
-            )
-        }else{
-            return (
-                <>
-                    <Navigate to="/login"/> 
-                </>
-            ); 
-        }
+            </Flex>
+        )
     }
+
+    if(status == false){
+        return (
+            <>
+                <Navigate to="/login"/> 
+            </>
+        ); 
+    } 
     
     return(
         <Flex  w='100vw' h ='100vh' minW='360' poaition='relative'>

@@ -56,9 +56,7 @@ useEffect(()=>{
                 mapStore.getCoordinate(e.lngLat)
                 console.log(e.lngLat)
             }) 
-        }
-        //listMarkers(markers,user,map)
-        changeStatusHttp()
+        } 
         changeListMarkers()
     }
 },[statusHttp]) 
@@ -70,15 +68,17 @@ useEffect(()=>{
             marker.remove();
         });
     }
-console.log('cargando datos en el mapa')
+    console.log('cargando datos en el mapa')
         
     if(markers.length <1 && listMarkers ==true){
         console.log('no hay :n')
     }else if(listMarkers){ 
         markers.map((marker)=>{  
             let imgMarker =''
+            const lengthImage = marker.images.length
+            
             marker.images.forEach((img)=>{
-                imgMarker = imgMarker + `<img src='${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/markers/${img.src_img}' class='img' /> `
+                imgMarker = imgMarker + `<div class='image'><img src='${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/markers/${img.src_img}'/ alt='img'></div>`
             }
             )
             let markerColor = '#4671FF';
@@ -88,13 +88,16 @@ console.log('cargando datos en el mapa')
             const arrCoordinate = [marker.long,marker.lat]
             new mapboxgl.Marker({ color: markerColor,fontSize:'90px' }).setLngLat(arrCoordinate)
             .setPopup(
-                new mapboxgl.Popup({ offset: 25 }) // add popups
+                new mapboxgl.Popup({ offset: 25 }) 
                 .setHTML(
                     `<div class='marker'> 
-                        <h1 class'title'> ${marker.title}</h1> 
-                         <div class='imagesCarousel'>
-                            <div class='imagesItems'>${imgMarker}</div>
-                         </div>
+                        <h1 class'title'> ${marker.title}</h1>  
+                        <div class='carousel' carousel${lengthImage}>
+                            <div class'carousel-items'>${imgMarker}</div>
+                        </div>
+                        <div class='details'>
+                            <span>Bedroom: ${marker.room} </span> ${lengthImage} Bathroom : ${marker.toilet}
+                        </div> 
                         <p class'description'> ${marker.description}</p> 
                     </div>`
                 )

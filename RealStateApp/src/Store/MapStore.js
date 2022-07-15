@@ -11,6 +11,7 @@ const useStore = create((set,get) => ({
   coordinate:null,
   errorHttp:false,
   clickMap:false,
+  error: false,
   filterValues:{'title':null,'business_types_id': null,'price':null,'room':null,'toilet':null},
   getMarkers: async () => {
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
@@ -54,6 +55,9 @@ const useStore = create((set,get) => ({
     set({ coordinate: null })
     set({ clickMap: null })
   },
+  ErrorClose : ()=>{
+    set(state => ({error: false }) )
+  },
   changeListMarkers: () => set(state => ({ listMarkers: !state.listMarkers })),
   changeStatusHttp: () => set(state => ({ statusHttp: false })),
   clickEventMap: () => set(state => ({ clickMap: !state.clickMap })),
@@ -87,8 +91,15 @@ const useStore = create((set,get) => ({
           case 'business_types_id':
             filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
           break;
-          case 'price':
-            filterMarkers =filterMarkers.filter(valueF => valueF[key]> value[0] && valueF[key]< value[1])
+          case 'price': 
+            filterMarkers =filterMarkers.filter(valueF =>{  
+              const price = valueF[key]
+              const min =value[0]
+              const max= value[1]
+              if(price > min && price < max){
+                return valueF
+              } 
+            })
           break;
           case 'room':
             if(value <=4){

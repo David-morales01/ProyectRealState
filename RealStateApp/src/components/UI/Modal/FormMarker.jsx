@@ -1,6 +1,6 @@
 import React from 'react'
 import MapStore from '../../../Store/MapStore'
-import {Flex,Select,useColorModeValue,Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,FormControl,FormLabel,Input,Button,Text} from '@chakra-ui/react'
+import {Flex,Select,useColorModeValue,Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,FormControl,FormLabel,Input,Button,Text,FormHelperText} from '@chakra-ui/react'
 import {FastField, Form, Formik,Field} from 'formik' 
 
 export default function FormMarker() {
@@ -10,13 +10,12 @@ export default function FormMarker() {
   const saveCoordinate = MapStore((state) => state.saveCoordinate)
   const coordinate = MapStore(state => state.coordinate)
 
-  console.log(coordinate)
   // Theme
   const errorText = useColorModeValue('color.errorLight', 'color.errorDark')
  
   return (  
       <Modal closeOnOverlayClick={false} isOpen={true} scrollBehavior='inside'>
-        {/* <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(4px) hue-rotate(30deg)' /> */}
+        <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(4px) hue-rotate(30deg)' /> 
         <ModalContent>
           <ModalHeader fontSize='26px' align='center'>Create new marker</ModalHeader>
             <ModalBody  px={10}> 
@@ -71,6 +70,11 @@ export default function FormMarker() {
                   if(values.business_types_id == 0){ 
                     validateErrors.business_types_id='Business Type is required. '
                   }
+                  if(values.images.length == 0){ 
+                    validateErrors.images='At least one image is required. '
+                  }else if(values.images.length == 10){ 
+                    validateErrors.images='Maximum 10 images. '
+                  }
                     return validateErrors
                   }}
 
@@ -78,117 +82,122 @@ export default function FormMarker() {
                 {({errors,touched,setFieldValue})=> (
                 <Form>  
                   <FormControl h='132px' isInvalid={errors.title && touched.title}> 
-                      <FormLabel>Title</FormLabel>
-                      <FastField   name="title"> 
-                        {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='text'  {...field} autoComplete='off'/>)}
-                      </FastField>   
-                      {touched.title && errors.title ? 
-                        <Text my='2' fontSize="14px" color={errorText}>{errors.title} </Text> :''
-                      }  
-                    </FormControl>
-                    <FormControl h='132px' isInvalid={errors.description && touched.description}> 
-                      <FormLabel>Description</FormLabel>
-                      <FastField   name="description"> 
-                        {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='text'  {...field} autoComplete='off'/>)}
-                      </FastField>   
-                      {touched.description && errors.description ? 
-                        <Text my='2' fontSize="14px" color={errorText}>{errors.description} </Text> :''
-                      }  
-                    </FormControl>
-                    <FormControl h='132px' isInvalid={errors.price && touched.price}> 
-                      <FormLabel>Price</FormLabel>
-                      <FastField   name="price"> 
+                    <FormLabel>Title</FormLabel>
+                    <FastField   name="title"> 
+                      {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='text'  {...field} autoComplete='off'/>)}
+                    </FastField>   
+                    {touched.title && errors.title ? 
+                      <Text my='2' fontSize="14px" color={errorText}>{errors.title} </Text> :
+                        <FormHelperText > Enter a title</FormHelperText>
+                    }  
+                  </FormControl>
+                  <FormControl h='132px' isInvalid={errors.description && touched.description}> 
+                    <FormLabel>Description</FormLabel>
+                    <FastField   name="description"> 
+                      {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='text'  {...field} autoComplete='off'/>)}
+                    </FastField>   
+                    {touched.description && errors.description ? 
+                      <Text my='2' fontSize="14px" color={errorText}>{errors.description} </Text> :
+                      <FormHelperText > Enter a description</FormHelperText>
+                    }  
+                  </FormControl>
+                  <FormControl h='132px' isInvalid={errors.price && touched.price}> 
+                    <FormLabel>Price</FormLabel>
+                    <FastField   name="price"> 
+                      {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
+                    </FastField>   
+                    {touched.price && errors.price ? 
+                      <Text my='2' fontSize="14px" color={errorText}>{errors.price} </Text> :
+                      <FormHelperText > Enter a price</FormHelperText>
+                    }  
+                  </FormControl>  
+                  <FormControl  h='132px' isInvalid={errors.business_types_id && touched.business_types_id}> 
+                    <FormLabel>Type Business</FormLabel>
+                    <FastField name='business_types_id'>
+                    {({field,meta})=>(
+                    <Select placeholder='Select option'  {...field}  variant='filled'>
+                      <option value='1'>Home</option>
+                      <option value='2'>Commercial</option>
+                      <option value='3'>Apartment</option>
+                      <option value='3'>Vacant</option>
+                    </Select>
+                    )}
+                    </FastField>
+                    {touched.business_types_id && errors.business_types_id ? 
+                      <Text my='2' fontSize="14px" color={errorText}>{errors.business_types_id} </Text> :
+                      <FormHelperText > Selec the type of business</FormHelperText>
+                    } 
+                  </FormControl>
+
+                  <Flex h='132px' justify='space-between'>
+                    <FormControl w='45%' isInvalid={errors.long && touched.long}> 
+                      <FormLabel>Longitude</FormLabel>
+                      <FastField   name="long"> 
                         {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
                       </FastField>   
-                      {touched.price && errors.price ? 
-                        <Text my='2' fontSize="14px" color={errorText}>{errors.price} </Text> :''
+                      {touched.long && errors.long ? 
+                        <Text my='2' fontSize="14px" color={errorText}>{errors.long} </Text> : 
+                        <FormHelperText > Maker longitude</FormHelperText>
                       }  
-                    </FormControl>  
-                    <FormControl  h='132px' isInvalid={errors.business_types_id && touched.business_types_id}> 
-                      <FormLabel>Type Business</FormLabel>
-                      <FastField name='business_types_id'>
-                      {({field,meta})=>(
-                      <Select placeholder='Select option'  {...field}  variant='filled'>
-                        <option value='1'>Home</option>
-                        <option value='2'>Commercial</option>
-                        <option value='3'>Apartment</option>
-                        <option value='3'>Vacant</option>
-                      </Select>
-                      )}
-                      </FastField>
-                      {touched.business_types_id && errors.business_types_id ? 
-                        <Text my='2' fontSize="14px" color={errorText}>{errors.business_types_id} </Text> :''
-                      } 
                     </FormControl>
 
-                    <Flex h='132px' justify='space-between'>
-                      <FormControl w='45%' isInvalid={errors.long && touched.long}> 
-                        <FormLabel>Longitude</FormLabel>
-                        <FastField   name="long"> 
-                          {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
-                        </FastField>   
-                        {touched.long && errors.long ? 
-                          <Text my='2' fontSize="14px" color={errorText}>{errors.long} </Text> :'xd'
-                        }  
-                      </FormControl>
+                    <FormControl w='45%' isInvalid={errors.lat && touched.lat}> 
+                      <FormLabel>Latitude</FormLabel>
+                      <FastField   name="lat"> 
+                        {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
+                      </FastField>   
+                      {touched.lat && errors.lat ? 
+                        <Text my='2' fontSize="14px" color={errorText}>{errors.lat} </Text> :
+                        <FormHelperText > Marker latitude</FormHelperText>
+                      }  
+                    </FormControl>
+                  </Flex> 
+                  <Flex h='132px' justify='space-between'>
+                    <FormControl w='45%' isInvalid={errors.room && touched.room}> 
+                      <FormLabel>Rooms</FormLabel>
+                      <FastField   name="room"> 
+                        {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
+                      </FastField>   
+                      {touched.room && errors.room ? 
+                        <Text my='2' fontSize="14px" color={errorText}>{errors.room} </Text> :
+                        <FormHelperText > Enter the number of rooms</FormHelperText>
+                      }  
+                    </FormControl>
 
-                      <FormControl w='45%' isInvalid={errors.lat && touched.lat}> 
-                        <FormLabel>Latitude</FormLabel>
-                        <FastField   name="lat"> 
-                          {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
-                        </FastField>   
-                        {touched.lat && errors.lat ? 
-                          <Text my='2' fontSize="14px" color={errorText}>{errors.lat} </Text> :''
-                        }  
-                      </FormControl>
-                    </Flex> 
-                    <Flex h='132px' justify='space-between'>
-                      <FormControl w='45%' isInvalid={errors.room && touched.room}> 
-                        <FormLabel>Rooms</FormLabel>
-                        <FastField   name="room"> 
-                          {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
-                        </FastField>   
-                        {touched.room && errors.room ? 
-                          <Text my='2' fontSize="14px" color={errorText}>{errors.room} </Text> :''
-                        }  
-                      </FormControl>
-
-                      <FormControl w='45%' isInvalid={errors.toilet && touched.toilet}> 
-                        <FormLabel>Toilet</FormLabel>
-                        <FastField   name="toilet"> 
-                          {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
-                        </FastField>   
-                        {touched.toilet && errors.toilet ? 
-                          <Text my='2' fontSize="14px" color={errorText}>{errors.toilet} </Text> :''
-                        }  
-                      </FormControl>
-                    </Flex> 
-                    <FormControl isInvalid={errors.images && touched.images}> 
-                        <FormLabel>images</FormLabel>
-                        {/* /*<FastField   name="images"> 
-                         // {({field,meta})=>( */}
-                          <input type='file' multiple name="images"
-                          
-                           onChange={(e) => {
-                            setFieldValue("images", e.currentTarget.files)
-                            // console.log(e)
-                            // console.log('xd')
-                         // }}
-                         // setFieldValue("images", event.currentTarget.files[0]);}}
-                          
-                          
-                          }}/>
-                          {/* //)}
+                    <FormControl w='45%' isInvalid={errors.toilet && touched.toilet}> 
+                      <FormLabel>Toilet</FormLabel>
+                      <FastField   name="toilet"> 
+                        {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='number'  {...field} autoComplete='off'/>)}
+                      </FastField>   
+                      {touched.toilet && errors.toilet ? 
+                        <Text my='2' fontSize="14px" color={errorText}>{errors.toilet} </Text> :
+                        <FormHelperText > Enter the number of bathrooms</FormHelperText>
+                      }  
+                    </FormControl>
+                  </Flex> 
+                  <FormControl isInvalid={errors.images && touched.images}> 
+                      <FormLabel>images</FormLabel>
+                      {/* /*<FastField   name="images"> 
+                        // {({field,meta})=>( */}
+                        <input type='file' multiple name="images"
                         
-                        //</FastField>    */}
-                        {touched.images && errors.images ? 
-                          <Text my='2' fontSize="14px" color={errorText}>{errors.images} </Text> :''
-                        }  
-                      </FormControl> 
-                    <Flex mt='20px'> 
-                        <Button colorScheme='blue' type='submit' mr={3}>Save</Button>
-                        <Button onClick={ModalCoordinateClose}>Cancel</Button> 
-                    </Flex>
+                          onChange={(e) => {
+                          setFieldValue("images", e.currentTarget.files) 
+                            console.log(e.currentTarget.files)
+                        
+                        }}/>
+                        {/* //)}
+                      
+                      //</FastField>    */}
+                      {touched.images && errors.images ? 
+                        <Text my='2' fontSize="14px" color={errorText}>{errors.images} </Text> :
+                        <FormHelperText >Select your favorite images</FormHelperText>
+                      }  
+                    </FormControl> 
+                  <Flex mt='20px'> 
+                      <Button colorScheme='blue' type='submit' mr={3}>Save</Button>
+                      <Button onClick={ModalCoordinateClose}>Cancel</Button> 
+                  </Flex>
                 </Form>
                 )}
               </Formik>

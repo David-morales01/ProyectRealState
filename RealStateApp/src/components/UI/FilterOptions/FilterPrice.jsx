@@ -25,7 +25,7 @@ export default function FilterPrice(){
                 <Text fontSize='18px'>Your Budget</Text>
             </Box>
             <Box h='70px' opacity={desktopView?'0':'1'} transition='0.5s' my='20px' w='100%' pl='10px' pr='20px' sx={{'.sidebarContent:hover &':{transition : '4s', opacity:'1'}}}>
-                <RangeSlider aria-label={['min', 'max']} max='10000' defaultValue={[0, 0]} onChangeEnd={(val) => sendValue(val) } >
+                <RangeSlider aria-label={['min', 'max']} max='10000' defaultValue={[0, 0]} onChange={ (val) => changeSlider(val)} onChangeEnd={(val) => sendValue(val) } >
                     <RangeSliderTrack bg={bgSlider}>
                         <RangeSliderFilledTrack bg={bgRangeSlider} />
                     </RangeSliderTrack>
@@ -36,24 +36,28 @@ export default function FilterPrice(){
                         <Box></Box>
                     </RangeSliderThumb>
                 </RangeSlider>
-                {values? <Flex justify='center' my='10px'><Box mr='10px'>MIN : ${values[0]}</Box>,<Box ml='10px'>MAX : ${values[1]}</Box></Flex> :''}
+                {values? <Flex justify='center' my='10px'><Box mr='10px'>MIN : ${values[0]}</Box>-<Box ml='10px'>MAX : ${values[1]}</Box></Flex> :''}
             </Box> 
         </>
     )
-    function sendValue(val){ 
+    function changeSlider(val){
+        if(val[1] == 0){
+                SetValues(null) 
+            }else{ 
+                SetValues(val) 
+            }
+    }
+    function sendValue(val){
         if(val[0] != minPrice.current || val[1] != maxPrice.current){
-            
-            minPrice.current=val[0]
-            maxPrice.current=val[1]
-            SetValues(val)
-            
-            if(val[0] == 0 && val[0]==0){
-                filterMap('price',[null,null])
-
+            if(val[1] == 0){
+                filterMap('price',[null,null])  
             }else{
                 filterMap('price',val)
+                
             }
-
-        } 
+            minPrice.current=val[0]
+            maxPrice.current=val[1] 
+        }
+        
     }
 }

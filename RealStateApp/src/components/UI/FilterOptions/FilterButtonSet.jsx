@@ -12,7 +12,7 @@ export default function FilterButtonSet(){
     const bedroom = MapStore(state => state.filterValues.room) 
     const bathroom = MapStore(state => state.filterValues.toilet)  
     return( 
-        <Box opacity={desktopView?'0':'1'} transition='0.5s' my='20px' w='100%' sx={{'.sidebarContent:hover &':{transition : '4s', opacity:'1'}}}>
+        <Box className='ButtonGroup' opacity={desktopView?'0':'1'} transition='0.5s' my='20px' w='100%' sx={{'.sidebarContent:hover &':{transition : '4s', opacity:'1'}}}>
             <Text fontSize='18px'>Property Room</Text>
             <Text my='14px' fontSize='14px'>Bedroom</Text>
             <ButtonGroup variant='outline' spacing='3'>

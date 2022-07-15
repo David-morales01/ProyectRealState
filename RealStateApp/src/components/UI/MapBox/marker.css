@@ -3,20 +3,66 @@
     color:black; 
     width:200px; 
     text-align: center;
-} 
+}
+
+.carousel{
+    display:flex; 
+    overflow:auto; 
+    width:200px;
+    height:200px; 
+}
+.carousel-items{ 
+    overflow:auto; 
+    position:relative;
+    display:flex;  
+    width:200px;
+    height:200px;   
+}
+.carousel-items .image{  
+    position:relative;
+    min-width:200px; 
+    min-height:200px; 
+    display:flex; 
+}
+.image img{
+
+    min-width:200px; 
+    min-height:200px; 
+    object-fit: cover;   
+}
+ /*
 .imagesCarousel{
-    overflow:hidden;
+    position:relative; 
+    overflow:none; 
     width:200px;
     height:200px;
     margin: 20px 0px;
+    background-color: red;
 }
-.imagesCarousel .imagesItems {
-    display:flex;
-    width:200px;
-    height:200px;
-    overflow: auto;
-    /*animation: carouselAnimate 10s infinite;*/
+.imagesCarousel img{ 
+    position:relative;
+    width:500px;
+    height:100%; 
+    border:1px solid blue;
+} 
+.details span{
+    margin-inline-end: 20px; 
+}/*
+.imagesCarousel> div{
+    width:100%;
+    height:100%; 
+    background-color: red;
+    border: 1px solid blue;
+
+}.imagesCarousel div img {
+    display:none;
+    position:relative;
+    width:100%;
+    height:100%; 
+    border: 1px solid blue;
+    
 }
+/*animation: carouselAnimate 10s infinite;*/
 /*
 @keyframes carouselAnimate {
     0% {margin-left: 0;}

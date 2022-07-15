@@ -4,7 +4,7 @@ import ky from "ky";
 
 const useStore = create(set => ({
   user:{},
-  status:false,
+  status:null,
   disabled:false,
   loading:false,
   error :false,
@@ -65,15 +65,13 @@ const useStore = create(set => ({
       }) 
   },
   
-  restartValues: async () => {
-    set({ loading: false })
-    set({ status: false })
+  restartValues: async () => { 
+    set({ status: null })
     set({ disabled: false }) 
     
   },
-  validateUser: async () => { 
-    set({ loading: false })
-    set({ status: false })
+  validateUser: async () => {  
+    set({ status: null })
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
     
     if(accessToken){
@@ -97,21 +95,17 @@ const useStore = create(set => ({
         localStorage.removeItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
         set({ status: false }) 
         console.log('error : ',err)
-      })
-      .finally(()=>{  
-        set({ loading: true })  
-       })
+      }) 
        
     }else{
        
-        set({ error:  'Login to continue' })  
-        set({ status: false }) 
-        set({ loading: true }) 
+      set({ error:  'Login to continue' })  
+      set({ status: false })  
     } 
   },
     logOut:  () => {
       localStorage.removeItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
-      set({ status: false })
+      set({ status: null })
       set({ user: null })
   },
   ErrorClose : ()=>{

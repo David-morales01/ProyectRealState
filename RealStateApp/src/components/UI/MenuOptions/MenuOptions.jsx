@@ -27,6 +27,11 @@ export default function MenuOptions(){
             },
             '.active>svg':{
                 fill:'#ffffff',
+            },
+            '.ButtonGroup button:hover':{
+                bg:'#3347D2',
+                color:'#ffffff',
+
             }
 
                 

@@ -1,21 +1,22 @@
 import React from 'react'
 import {Flex,useColorModeValue,Text,useMediaQuery,Avatar,AvatarBadge,Menu,MenuButton,MenuList,MenuItem} from '@chakra-ui/react'
-import MenuDrawer from '../MenuDrawer/MenuDrawer'
 import AuthStore from '../../../Store/AuthStore'  
-import MapStore from '../../../Store/MapStore' 
-import ColorModoText from '../ColorModeSwitcher/ColorModoText'  
-import { ChevronDownIcon } from '@chakra-ui/icons'
+import RouteStore from '../../../Store/RouteStore'  
+import ColorModoText from '../ColorModeSwitcher/ColorModoText'
+import {ChevronDownIcon } from '@chakra-ui/icons'
+import MapBoxOptions from '../MenuOptions/MapBoxOptions'
+import UserOptions from '../MenuOptions/UserOptions'
 
 export default function Header(){
     
     // Store
     const logOut = AuthStore((state) => state.logOut) 
     const user = AuthStore(state => state.user)
-    const clickMap = MapStore(state => state.clickMap)
-    const clickEventMap = MapStore((state) => state.clickEventMap)
-
+    const route = RouteStore(state => state.route)
+    
     // Media Query
     const [desktopView] = useMediaQuery('(min-width: 800px)') 
+
     // theme colors
     const colorText = useColorModeValue('color.colorTextLight', 'bg.colorTextDark')
     const bgHeader = useColorModeValue('bg.headerLight', 'bg.headerDark')
@@ -36,10 +37,8 @@ export default function Header(){
                         <MenuButton px={0} py={0}> 
                             <ChevronDownIcon />
                         </MenuButton>
-                        <MenuList color={colorText}>
-                            <MenuItem>My perfil</MenuItem>
-                            {desktopView? '':<MenuDrawer/> }
-                            {user.rol == 'admin' ? <MenuItem onClick={clickEventMap}>{clickMap? 'Cancel add Marker' : 'New Marker'}</MenuItem> : ''}
+                        <MenuList color={colorText}> 
+                            { route == 'perfil' ?<UserOptions/>:<MapBoxOptions/>} 
                             <MenuItem onClick={logOut}>Log Out</MenuItem> 
                             <ColorModoText/>
                         </MenuList>
