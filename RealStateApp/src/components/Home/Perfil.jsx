@@ -48,91 +48,91 @@ export default function Perfil(){
                     </Flex>
                     <Box h='fit-content' border={`1px solid ${bgborder}`} mx='40px' mt='60px' px='40px' py='60px' bg={bgContainer}w='100%'>
                     <Formik
-                            initialValues={{ 
-                                name:user.name,
-                                email:user.email,
-                                password:user.password,
-                            }}
+                        initialValues={{ 
+                            name:user.name,
+                            email:user.email,
+                            password:user.password,
+                        }}
 
-                            validate={(values)=>{
+                        validate={(values)=>{
 
-                            let validateErrors ={}
+                        let validateErrors ={}
 
-                            if(!values.name){ 
-                                validateErrors.name='Name is required. '
-                            } 
+                        if(!values.name){ 
+                            validateErrors.name='Name is required. '
+                        } 
 
-                            if(!values.email){ 
-                                validateErrors.email='Email is required. '
-                            }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                                validateErrors.email = 'Invalid email address';
-                            }
+                        if(!values.email){ 
+                            validateErrors.email='Email is required. '
+                        }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                            validateErrors.email = 'Invalid email address';
+                        }
 
-                            if(!values.password){ 
-                                validateErrors.password='Password is required. '
-                            }else if(values.password.length <=9){
-                                validateErrors.password='The password must contain at least 10 characters. '
-                            }
+                        if(!values.password){ 
+                            validateErrors.password='Password is required. '
+                        }else if(values.password.length <=9){
+                            validateErrors.password='The password must contain at least 10 characters. '
+                        }
 
-                            return validateErrors
-                            }}
+                        return validateErrors
+                        }}
 
-                            onSubmit={values =>{console.log(values)}}
-                            
-                            >
-                            {({errors,touched})=> (
-                            <Form> 
-                                <Text align='center' fontSize='24px'>Register</Text> 
+                        onSubmit={values =>{console.log(values)}}
+                        
+                        >
+                        {({errors,touched})=> (
+                        <Form> 
+                            <Text align='center' fontSize='24px'>Register</Text> 
 
-                                <FormControl h='20' mb='8' isInvalid={errors.name && touched.name}> 
-                                    <FormLabel>Name</FormLabel>
-                                    <FastField  name="name"> 
-                                    {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='text' {...field}  autoComplete='off' />)}
-                                    </FastField>  
-                                    {touched.name && errors.name ? <Text my='2' fontSize="14px" color={errorText}>{errors.name} </Text> : ''}
-                                </FormControl>
+                            <FormControl h='20' mb='8' isInvalid={errors.name && touched.name}> 
+                                <FormLabel>Name</FormLabel>
+                                <FastField  name="name"> 
+                                {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='text' {...field}  autoComplete='off' />)}
+                                </FastField>  
+                                {touched.name && errors.name ? <Text my='2' fontSize="14px" color={errorText}>{errors.name} </Text> : ''}
+                            </FormControl>
 
-                                <FormControl h='20' my='8' isInvalid={errors.email && touched.email}> 
-                                    <FormLabel>Email address</FormLabel>
-                                    <FastField  name="email"> 
-                                    {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='email' {...field}  autoComplete='off' />)}
-                                    </FastField>  
-                                    {touched.email && errors.email ? <Text my='2' fontSize="14px" color={errorText}>{errors.email} </Text> : <FormHelperText > We'll never share your email</FormHelperText>}
-                                </FormControl>
+                            <FormControl h='20' my='8' isInvalid={errors.email && touched.email}> 
+                                <FormLabel>Email address</FormLabel>
+                                <FastField  name="email"> 
+                                {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='email' {...field}  autoComplete='off' />)}
+                                </FastField>  
+                                {touched.email && errors.email ? <Text my='2' fontSize="14px" color={errorText}>{errors.email} </Text> : <FormHelperText > We'll never share your email</FormHelperText>}
+                            </FormControl>
 
-                                <FormControl h='20' my='8' isInvalid={errors.password && touched.password}>
-                                    <FormLabel>Password</FormLabel>
-                                    <FastField   name="password"> 
-                                    {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='password'  {...field} autoComplete='off'/>)}
-                                    </FastField>   
-                                    {touched.password && errors.password ? 
-                                        <Text my='2' fontSize="14px" color={errorText}>{errors.password} </Text> :''
-                                    }  
-                                </FormControl>    
-                                {disable ? 
-                                    <Button  
-                                        color='white' 
-                                        bg={buttonColor} 
-                                        isLoading
-                                        _hover={{}}
-                                        _active={{}}
-                                        w='100%' type='button' mt='2px'>
-                                    </Button>: 
-                                    
-                                    <Button  
-                                        color='white' 
-                                        bg={buttonColor} 
-                                        _hover={{ boxShadow:`0px 0px  10px ${shadowButton} `, }}
-                                        _active={{}}
-                                        w='100%' type='submit' mt='2px'>
-                                        Register
-                                    </Button>
-                                   
-                                } 
+                            <FormControl h='20' my='8' isInvalid={errors.password && touched.password}>
+                                <FormLabel>Password</FormLabel>
+                                <FastField   name="password"> 
+                                {({field,meta})=>(<Input errorBorderColor='crimson' variant='filled' type='password'  {...field} autoComplete='off'/>)}
+                                </FastField>   
+                                {touched.password && errors.password ? 
+                                    <Text my='2' fontSize="14px" color={errorText}>{errors.password} </Text> :''
+                                }  
+                            </FormControl>    
+                            {disable ? 
+                                <Button  
+                                    color='white' 
+                                    bg={buttonColor} 
+                                    isLoading
+                                    _hover={{}}
+                                    _active={{}}
+                                    w='100%' type='button' mt='2px'>
+                                </Button>: 
                                 
-                            </Form>
-                            )}
-                        </Formik> 
+                                <Button  
+                                    color='white' 
+                                    bg={buttonColor} 
+                                    _hover={{ boxShadow:`0px 0px  10px ${shadowButton} `, }}
+                                    _active={{}}
+                                    w='100%' type='submit' mt='2px'>
+                                    Register
+                                </Button>
+                                
+                            } 
+                            
+                        </Form>
+                        )}
+                    </Formik> 
                     </Box>
                 </Flex>
             </Flex>
