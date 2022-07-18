@@ -4,7 +4,8 @@ import {FastField, Form, Formik} from 'formik'
 import Header from '../UI/Header/Header' 
 import AuthStore from '../../Store/AuthStore' 
 import RouteStore from '../../Store/RouteStore' 
-import {useNavigate, Link,Navigate} from 'react-router-dom' 
+import {useNavigate, Link,Navigate} from 'react-router-dom'
+import Dd from '../UI/Editable/EditableControl'
 
 export default function Perfil(){
     // Store 
@@ -17,19 +18,18 @@ export default function Perfil(){
 
 
     // Theme
-    const errorText = useColorModeValue('color.errorLight', 'color.errorDark')
-    const colorLink = useColorModeValue('color.linkLight', 'color.linkDark')
+    const errorText = useColorModeValue('color.errorLight', 'color.errorDark') 
     const buttonColor = useColorModeValue('bg.buttonLight', 'bg.buttonDark') 
     const borderColor = useColorModeValue('color.borderLight', 'color.borderDark') 
     const shadowButton = useColorModeValue('#A0A0A0', '#0066cc') 
-    const bgContainer = useColorModeValue('bg.containerLight', 'bg.containerDark')
-    const bgborder = useColorModeValue('#f9cc1c,#eddc98,transparent 100%', '#facc14,#bb9f29,transparent 100%')
+    const bgContainer = useColorModeValue('bg.containerLight', 'bg.containerDark') 
 
     useEffect(()=>{   
         ChangeRoute('perfil')
     },[])
     
 
+    
     if(status == false){  
         return (
             <>
@@ -46,7 +46,7 @@ export default function Perfil(){
                     <Flex align='center' w='400px'  >
                         <img src={`${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/users/${user.img_user}`} />
                     </Flex>
-                    <Box h='fit-content' border={`1px solid ${bgborder}`} mx='40px' mt='60px' px='40px' py='60px' bg={bgContainer}w='100%'>
+                    <Box h='fit-content'  borderColor={borderColor} borderWidth= '1px' bg={bgContainer} mx='40px' mt='60px' px='40px' py='60px'  w='100%' borderRadius='20px'>
                     <Formik
                         initialValues={{ 
                             name:user.name,
@@ -108,7 +108,8 @@ export default function Perfil(){
                                 {touched.password && errors.password ? 
                                     <Text my='2' fontSize="14px" color={errorText}>{errors.password} </Text> :''
                                 }  
-                            </FormControl>    
+                            </FormControl> 
+                    <Dd/>   
                             {disable ? 
                                 <Button  
                                     color='white' 

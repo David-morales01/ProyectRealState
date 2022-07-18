@@ -6,7 +6,8 @@ export default function MapBoxOptions(){
  
     return(
 
-        <> <MenuItem><Link to="/">Back to map</Link></MenuItem>            
+        <> 
+            <Link to="/"><MenuItem>Back to map </MenuItem></Link>
         </>
     )
 }
