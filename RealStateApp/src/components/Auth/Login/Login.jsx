@@ -5,6 +5,7 @@ import {useNavigate, Link,Navigate} from 'react-router-dom'
 import {ColorModeSwitcher} from '../../UI/ColorModeSwitcher/ColorModeSwitcher' 
 import AuthStore from '../../../Store/AuthStore' 
 import ErrorMessage from '../../UI/Message/ErrorMessage'
+import * as Yup from 'yup' 
 
 export default function Login() {
 
@@ -29,6 +30,11 @@ export default function Login() {
     // navigate :)
     const navigate = useNavigate()
     
+    // Yup
+    const validate  = Yup.object({
+        email:Yup.string().email("Invalid email address.").required("Password is required."),
+        password:Yup.string().required("Password is required.").min(10,'The password must contain at least 10 characters.')
+    })
     
     // session token
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`) 
@@ -60,23 +66,8 @@ export default function Login() {
                                 password:'1234567891',
                             }}
 
-                            validate={(values)=>{
-
-                            let validateErrors ={}
-
-                            if(!values.email){ 
-                                validateErrors.email='Email is required. '
-                            }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                                validateErrors.email = 'Invalid email address';
-                            }
-
-                            if(!values.password){ 
-                                validateErrors.password='Password is required. '
-                            }else if(values.password.length <=9){
-                                validateErrors.password='The password must contain at least 10 characters. '
-                            }
-                            return validateErrors
-                            }}
+                            
+                            validationSchema={validate}
 
                             onSubmit={values =>{login(values)}}
                             

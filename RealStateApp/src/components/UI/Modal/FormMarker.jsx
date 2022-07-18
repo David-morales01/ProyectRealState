@@ -1,18 +1,33 @@
 import React from 'react'
 import MapStore from '../../../Store/MapStore'
 import {Flex,Select,useColorModeValue,Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,FormControl,FormLabel,Input,Button,Text,FormHelperText} from '@chakra-ui/react'
-import {FastField, Form, Formik,Field} from 'formik' 
+import {FastField, Form, Formik} from 'formik'
+import * as Yup from 'yup'  
 
 export default function FormMarker() {
   
   // Store
   const ModalCoordinateClose = MapStore((state) => state.modalCoordinateClose)
   const saveCoordinate = MapStore((state) => state.saveCoordinate)
-  const coordinate = MapStore(state => state.coordinate)
-
+  const coordinate = MapStore(state => state.coordinate) 
+  const disable = MapStore(state => state.disable) 
+  // Yup
+  const validate  = Yup.object({
+    title:Yup.string().required('Title is required.'),
+    description:Yup.string().required('Description is required.'),
+    room:Yup.number().required('The number of rooms must be greater than 0'),
+    toilet:Yup.number().required('The number of toilet must be greater than 0'),
+    price:Yup.number().required('Price must be greater than 0.'),
+    long:Yup.number().required('Longitude is required. '),
+    lat:Yup.number().required('Latitude is required. '),
+    business_types_id:Yup.number().min(1,'Business Type is required.').required('Business Type is required.'),
+    images:Yup.string().required('At least one image is required.'),
+    
+  })
   // Theme
   const errorText = useColorModeValue('color.errorLight', 'color.errorDark')
- 
+  const shadowButton = useColorModeValue('#A0A0A0', '#0066cc') 
+    
   return (  
       <Modal closeOnOverlayClick={false} isOpen={true} scrollBehavior='inside'>
         <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(4px) hue-rotate(30deg)' /> 
@@ -32,51 +47,7 @@ export default function FormMarker() {
                   images:[]
                 }}
 
-                validate={(values)=>{
-                  
-                  let validateErrors ={}
-  
-
-                  if(!values.title){ 
-                    validateErrors.title='Title is required. '
-                  }
-                  if(!values.description){ 
-                    validateErrors.description='Description is required. '
-                  }
-                  if(values.room<1){ 
-                    validateErrors.room='The number of rooms must be greater than 0. '
-                  }
-                  if(values.toilet<1){ 
-                    validateErrors.toilet='The number of toilet must be greater than 0. '
-                  }
-                  
-                  if(values.price<1){ 
-                    validateErrors.price='Price must be greater than 0. '
-                  }
-
-                  if(!values.long){ 
-                    validateErrors.long='Longitude is required. '
-                  }else if (values.long>90){
-                    validateErrors.long='Longitude is invalid. '
-
-                  }
-
-                  if(!values.lat){ 
-                    validateErrors.lat='Latitude is required. '
-                  }else if (values.lat>90){
-                    validateErrors.lat='latitude is invalid. '
-
-                  }
-                  if(values.business_types_id == 0){ 
-                    validateErrors.business_types_id='Business Type is required. '
-                  }
-                  if(values.images.length == 0){ 
-                    validateErrors.images='At least one image is required. '
-                  }else if(values.images.length == 10){ 
-                    validateErrors.images='Maximum 10 images. '
-                  }
-                    return validateErrors
-                  }}
+                validationSchema={validate}  
 
                 onSubmit={values =>{saveCoordinate(values)}} >
                 {({errors,touched,setFieldValue})=> (
@@ -152,7 +123,7 @@ export default function FormMarker() {
                       }  
                     </FormControl>
                   </Flex> 
-                  <Flex h='132px' justify='space-between'>
+                  <Flex h='140px' justify='space-between'>
                     <FormControl w='45%' isInvalid={errors.room && touched.room}> 
                       <FormLabel>Rooms</FormLabel>
                       <FastField   name="room"> 
@@ -175,27 +146,41 @@ export default function FormMarker() {
                       }  
                     </FormControl>
                   </Flex> 
-                  <FormControl isInvalid={errors.images && touched.images}> 
-                      <FormLabel>images</FormLabel>
-                      {/* /*<FastField   name="images"> 
-                        // {({field,meta})=>( */}
+                  <FormControl h='120px' isInvalid={errors.images && touched.images}> 
+                      <FormLabel>Images</FormLabel> 
                         <input type='file' multiple name="images"
                         
                           onChange={(e) => {
                           setFieldValue("images", e.currentTarget.files)  
                         
                         }}/>
-                        {/* //)}
-                      
-                      //</FastField>    */}
+                         
                       {touched.images && errors.images ? 
                         <Text my='2' fontSize="14px" color={errorText}>{errors.images} </Text> :
                         <FormHelperText >Select your favorite images</FormHelperText>
                       }  
                     </FormControl> 
                   <Flex mt='20px'> 
-                      <Button colorScheme='blue' type='submit' mr={3}>Save</Button>
-                      <Button onClick={ModalCoordinateClose}>Cancel</Button> 
+                    {disable ? 
+                        <Button  
+                              
+                            colorScheme='blue' 
+                            isLoading
+                            _hover={{}}
+                            _active={{}}
+                             type='button' mt='2px' w='80px' mr={3}>
+                        </Button>: 
+                        
+                        <Button  
+                            
+                            colorScheme='blue'  
+                            _active={{}}
+                             type='submit' mt='2px' w='80px' mr={3}>
+                            Save
+                        </Button>
+                        
+                    }   
+                      <Button w='80px' onClick={ModalCoordinateClose}>Cancel</Button> 
                   </Flex>
                 </Form>
                 )}

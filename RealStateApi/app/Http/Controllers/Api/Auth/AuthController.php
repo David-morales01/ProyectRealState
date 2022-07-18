@@ -41,13 +41,14 @@ class AuthController extends Controller
     {
         $data = $request->validate(
             [
-                'email' => ['required', 'email'],
                 'name' => ['required'],
-                'password' => ['required'],
+                'email' => ['required', 'email'],
+                'password' => ['required'], 
             ]
         );
 
-        $data['img_user']='default.png';
+        $data['img_user'] = 'default.png';
+        $data['rol']='user';
 
         $user = User::create(
             array_merge($data, ['password' => bcrypt($data['password'])])

@@ -37,9 +37,7 @@ export default function MapBox(){
         map.current = new Map({
             container: mapDiv.current,
             style: 'mapbox://styles/mapbox/streets-v11',
-            //center: [-85.28229,12.467416], zoom : 7,
-            center:[-86.25717043876647,12.126737986671706],
-            zoom: 13  ,
+            center: [-85.28229,12.467416], zoom : 7,
             attributionControl: false
         })
         const nav = new mapboxgl.NavigationControl({
@@ -64,9 +62,7 @@ export default function MapBox(){
             });
         } 
             
-        if(markers.length <1 && listMarkers ==true){
-            console.log('no hay :n')
-        }else if(listMarkers){ 
+        if(markers.length >1 && listMarkers ==true){ 
             markers.map((marker)=>{  
                 let imgMarker =''
                 const lengthImage = marker.images.length

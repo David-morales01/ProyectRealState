@@ -5,6 +5,7 @@ import {useNavigate, Link,Navigate} from 'react-router-dom'
 import {ColorModeSwitcher} from '../../UI/ColorModeSwitcher/ColorModeSwitcher' 
 import AuthStore from '../../../Store/AuthStore' 
 import ErrorMessage from '../../UI/Message/ErrorMessage'
+import * as Yup from 'yup' 
 
 export default function Login() {
     // theme colors
@@ -24,6 +25,13 @@ export default function Login() {
     const disable = AuthStore(state => state.disabled)  
     const error = AuthStore(state => state.error)  
     
+     // Yup
+    const validate  = Yup.object({
+        name:Yup.string().required("Name is required."),
+        email:Yup.string().email("Invalid email address.").required("Password is required."),
+        password:Yup.string().required("Password is required.").min(10,'The password must contain at least 10 characters.')
+    })
+
     // navigate :)
     const navigate = useNavigate()  
     // session token
@@ -53,31 +61,11 @@ export default function Login() {
                             initialValues={{ 
                                 name:'',
                                 email:'',
-                                password:'',
+                                password:'', 
                             }}
 
-                            validate={(values)=>{
-
-                            let validateErrors ={}
-
-                            if(!values.name){ 
-                                validateErrors.name='Name is required. '
-                            } 
-
-                            if(!values.email){ 
-                                validateErrors.email='Email is required. '
-                            }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                                validateErrors.email = 'Invalid email address';
-                            }
-
-                            if(!values.password){ 
-                                validateErrors.password='Password is required. '
-                            }else if(values.password.length <=9){
-                                validateErrors.password='The password must contain at least 10 characters. '
-                            }
-
-                            return validateErrors
-                            }}
+                            
+                            validationSchema={validate}
 
                             onSubmit={values =>{register(values)}}
                             

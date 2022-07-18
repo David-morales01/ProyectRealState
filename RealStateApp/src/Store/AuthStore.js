@@ -17,7 +17,7 @@ const useStore = create(set => ({
      .then((resp) => {
       if(resp.access_token){
         localStorage.setItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`, resp.access_token)
-        set({ status: true })
+         
       }
       else{
         if(resp.errors){
@@ -36,16 +36,16 @@ const useStore = create(set => ({
         set({ disabled: false })
       })
   },
-  register: async (values) => {
+  register: async (values) => { 
      set({ disabled: true })
      const resp = ky
      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/register`, {
        json: values,throwHttpErrors: false,
      }).json()
      .then((resp) => {
-      if(resp.access_token){
+      if(resp.access_token){ 
         localStorage.setItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`, resp.access_token)
-        set({ status: true })
+         
       }
       else{
         if(resp.errors){
@@ -105,7 +105,7 @@ const useStore = create(set => ({
   },
     logOut:  () => {
       localStorage.removeItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
-      set({ status: null })
+      set({ status: false })
       set({ user: null })
   },
   ErrorClose : ()=>{

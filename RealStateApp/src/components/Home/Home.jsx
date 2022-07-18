@@ -14,13 +14,12 @@ export default function Home(){
     // Store
     const validateUser = AuthStore((state) => state.validateUser) 
     const status = AuthStore(state => state.status) 
-    const errorHttp = MapStore(state => state.errorHttp)
-    const route = RouteStore(state => state.errorHttp)
+    const errorHttp = MapStore(state => state.errorHttp) 
     const ChangeRoute = RouteStore(state => state.ChangeRoute) 
  
-    useEffect(()=>{ 
-        ChangeRoute('home')
+    useEffect(()=>{  
         validateUser()  
+        ChangeRoute('home')
     },[])
     
     

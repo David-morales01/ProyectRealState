@@ -2,7 +2,7 @@ import create from 'zustand'
 import ky from "ky";
 
 const useStore = create((set,get) => ({
-  loading:false,
+  disable:false,
   statusHttp:false,
   statusMap:false,
   listMarkers:false,
@@ -44,6 +44,7 @@ const useStore = create((set,get) => ({
   },
 
   getCoordinate : (clickCoordinate)=>{
+    set({ disable: false })
     const clickMap = get().clickMap
      if(clickMap){
       set({ coordinate: clickCoordinate})
@@ -130,7 +131,8 @@ const useStore = create((set,get) => ({
     }
   },
   saveCoordinate: async(values)=>{
-    set({ markers: 'null'})
+    set({ disable: true })
+    set({ markers: ''})
     let formData = new FormData();
     formData.append('title', values.title)
     formData.append('description', values.description)
@@ -162,6 +164,7 @@ const useStore = create((set,get) => ({
       set({ markers: listAllMarkers})
       // console.log('despues')
        set({ allMarkers: listAllMarkers})
+       set({ disable: false })
        set({ coordinate: null })
       // console.log(listAllMarkers)
     })

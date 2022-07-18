@@ -5,7 +5,7 @@ import Header from '../UI/Header/Header'
 import AuthStore from '../../Store/AuthStore' 
 import RouteStore from '../../Store/RouteStore' 
 import {useNavigate, Link,Navigate} from 'react-router-dom'
-import Dd from '../UI/Editable/EditableControl'
+import * as Yup from 'yup' 
 
 export default function Perfil(){
     // Store 
@@ -24,12 +24,19 @@ export default function Perfil(){
     const shadowButton = useColorModeValue('#A0A0A0', '#0066cc') 
     const bgContainer = useColorModeValue('bg.containerLight', 'bg.containerDark') 
 
+    // Yup
+    const validate  = Yup.object({
+        name:Yup.string().required("Name is required."),
+        email:Yup.string().email("Invalid email address.").required("Password is required."),
+        password:Yup.string().min(10,'The password must contain at least 10 characters.')
+    })
+    
     useEffect(()=>{   
         ChangeRoute('perfil')
     },[])
     
 
-    
+
     if(status == false){  
         return (
             <>
@@ -54,35 +61,14 @@ export default function Perfil(){
                             password:user.password,
                         }}
 
-                        validate={(values)=>{
-
-                        let validateErrors ={}
-
-                        if(!values.name){ 
-                            validateErrors.name='Name is required. '
-                        } 
-
-                        if(!values.email){ 
-                            validateErrors.email='Email is required. '
-                        }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-                            validateErrors.email = 'Invalid email address';
-                        }
-
-                        if(!values.password){ 
-                            validateErrors.password='Password is required. '
-                        }else if(values.password.length <=9){
-                            validateErrors.password='The password must contain at least 10 characters. '
-                        }
-
-                        return validateErrors
-                        }}
+                        validationSchema={validate}
 
                         onSubmit={values =>{console.log(values)}}
                         
                         >
                         {({errors,touched})=> (
                         <Form> 
-                            <Text align='center' fontSize='24px'>Register</Text> 
+                            <Text align='center' fontSize='24px'>My perfil</Text> 
 
                             <FormControl h='20' mb='8' isInvalid={errors.name && touched.name}> 
                                 <FormLabel>Name</FormLabel>
@@ -109,7 +95,6 @@ export default function Perfil(){
                                     <Text my='2' fontSize="14px" color={errorText}>{errors.password} </Text> :''
                                 }  
                             </FormControl> 
-                    <Dd/>   
                             {disable ? 
                                 <Button  
                                     color='white' 
