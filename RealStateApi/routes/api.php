@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Marker\MarkerController;
 
 /*
@@ -22,7 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::middleware('auth:sanctum')->group(function () { 
-    Route::apiResource('markers', MarkerController::class);
+    Route::apiResource('markers', MarkerController::class); 
+    Route::patch('users', [UserController::class,'update']); 
 });
 
 Route::post('register', [AuthController::class,'register']);

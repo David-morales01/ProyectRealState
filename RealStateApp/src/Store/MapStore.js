@@ -63,7 +63,7 @@ const useStore = create((set,get) => ({
   changeStatusHttp: () => set(state => ({ statusHttp: false })),
   clickEventMap: () => set(state => ({ clickMap: !state.clickMap })),
   filterMap : (key,value)=>{
-    //console.log('filtrando los ', key, ' iguales a ', value )
+    console.log('filtrando los ', key, ' iguales a ', value )
     let filterMarkers = get().allMarkers
     const filtervalues = get().filterValues
 
