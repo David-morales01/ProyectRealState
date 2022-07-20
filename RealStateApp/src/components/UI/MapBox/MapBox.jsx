@@ -8,6 +8,8 @@ import Spinner from '../Spinner/Spinner'
 import FormMarker from '../Modal/FormMarker'
 import ErrorMarker from '../Message/ErrorMarker'
 import './marker.scss'
+import * as ReactDOM from 'react-dom/client'
+import Popup from './Popup'
 
 export default function MapBox(){ 
 
@@ -78,22 +80,29 @@ export default function MapBox(){
                 if(user.id == marker.user_id){
                     markerColor ='#FF3333'
                 }
+                const popup =    new mapboxgl.Popup({ offset: 25 }) 
+                .setHTML(
+                    `<div  class='divMarker' ><div>`
+                )
+                popup.on('open', () => {
+                    const container = document.querySelector('.divMarker')
+                    const root = ReactDOM.createRoot(container) 
+                    root.render(
+                    <> 
+                        <Popup/>
+                    </>
+                )
+                    console.log('popup was opened');
+                })
+                popup.on('close', () => {
+                    // const container = document.querySelector('.divMarker')
+                    // container.remove()
+                    console.log('popup was closed');
+                    });
                 const arrCoordinate = [marker.long,marker.lat]
                 new mapboxgl.Marker({ color: markerColor,fontSize:'90px' }).setLngLat(arrCoordinate)
                 .setPopup(
-                    new mapboxgl.Popup({ offset: 25 }) 
-                    .setHTML(
-                        `<div class='marker'> 
-                            <h1 class='title'> ${marker.title}</h1>  
-                            <div class='carousel'>
-                                <div class='carousel-items carousel${lengthImage}'>${imgMarker}</div>
-                            </div>
-                            <div class='details'>
-                                <span>Bedroom: ${marker.room} </span>  Bathroom : ${marker.toilet}
-                            </div> 
-                            <p class='description'> ${marker.description}</p> 
-                        </div>`
-                    )
+                    popup
                 ).addTo(map.current); 
             })
                 

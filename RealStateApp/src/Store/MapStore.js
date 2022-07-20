@@ -64,71 +64,71 @@ const useStore = create((set,get) => ({
   clickEventMap: () => set(state => ({ clickMap: !state.clickMap })),
   filterMap : (key,value)=>{
     console.log('filtrando los ', key, ' iguales a ', value )
-    let filterMarkers = get().allMarkers
-    const filtervalues = get().filterValues
+    // let filterMarkers = get().allMarkers
+    // const filtervalues = get().filterValues
 
-    if(filtervalues[key] != value){
-      filtervalues[key]=value
-    }else{
-      filtervalues[key]=null
-    }
-    // f de filter :V
-    // valueF de value filtrada :V
-    Object.entries(filtervalues).forEach(f=>{
-      const key = f[0]
-      const value = f[1]
-      if(value != null){
-        switch(key){
-          case 'title':
-            filterMarkers =filterMarkers.filter(valueF => {
-              let title = valueF[key]
-              title =title.toLowerCase()
-              const valueComp =value.toLowerCase()
-              if(title.includes(valueComp)){
-                return valueF
-              }
-            })
-          break;
-          case 'business_types_id':
-            filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
-          break;
-          case 'price': 
-            filterMarkers =filterMarkers.filter(valueF =>{  
-              const price = valueF[key]
-              const min =value[0]
-              const max= value[1]
-              if(price > min && price < max){
-                return valueF
-              } 
-            })
-          break;
-          case 'room':
-            if(value <=4){
-              filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
-            }else{
-              filterMarkers =filterMarkers.filter(valueF => valueF[key] >=5)
-            }
-          break;
-          case 'toilet':
-            if(value <=4){
-              filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
-            }else{
-              filterMarkers =filterMarkers.filter(valueF => valueF[key] >=5)
-            }
-          break;
-        }
-      }
-    })
-    set({ listMarkers: true})
+    // if(filtervalues[key] != value){
+    //   filtervalues[key]=value
+    // }else{
+    //   filtervalues[key]=null
+    // }
+    // // f de filter :V
+    // // valueF de value filtrada :V
+    // Object.entries(filtervalues).forEach(f=>{
+    //   const key = f[0]
+    //   const value = f[1]
+    //   if(value != null){
+    //     switch(key){
+    //       case 'title':
+    //         filterMarkers =filterMarkers.filter(valueF => {
+    //           let title = valueF[key]
+    //           title =title.toLowerCase()
+    //           const valueComp =value.toLowerCase()
+    //           if(title.includes(valueComp)){
+    //             return valueF
+    //           }
+    //         })
+    //       break;
+    //       case 'business_types_id':
+    //         filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
+    //       break;
+    //       case 'price': 
+    //         filterMarkers =filterMarkers.filter(valueF =>{  
+    //           const price = valueF[key]
+    //           const min =value[0]
+    //           const max= value[1]
+    //           if(price > min && price < max){
+    //             return valueF
+    //           } 
+    //         })
+    //       break;
+    //       case 'room':
+    //         if(value <=4){
+    //           filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
+    //         }else{
+    //           filterMarkers =filterMarkers.filter(valueF => valueF[key] >=5)
+    //         }
+    //       break;
+    //       case 'toilet':
+    //         if(value <=4){
+    //           filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
+    //         }else{
+    //           filterMarkers =filterMarkers.filter(valueF => valueF[key] >=5)
+    //         }
+    //       break;
+    //     }
+    //   }
+    // })
+    // set({ listMarkers: true})
 
-    set({ filterValues: filtervalues})
-    set({ markers: filterMarkers})
-    if(filterMarkers.length <1){
-      set({ error: true})
-    }else{
-      set({ error: false})
+    // set({ filterValues: filtervalues})
+    // set({ markers: filterMarkers})
+    // if(filterMarkers.length <1){
+    //   set({ error: true})
+    // }else{
+    //   set({ error: false})
 
-    }
+    // }
   },
   saveCoordinate: async(values)=>{
     set({ disable: true })
