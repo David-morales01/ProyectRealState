@@ -83,18 +83,18 @@ export default function MapBox(){
                 const popup =    new mapboxgl.Popup({ offset: 25 })
                 .setHTML(
 
-                    `<div  class='divMarker' id='divMarker' ><div>`
-                )
+                    `<div  class='divMarker'><div>`
+                ) 
                 popup.on('open', () => {
 
-                    const container = document.querySelector('.mapboxgl-popup-content')
+                    const container = document.querySelector('.divMarker')
                     const root = ReactDOM.createRoot(container)
                     root.render(
                         <>
                             <Popup marker={marker}/>
                         </>
                     )
-                    console.log('popup was opened');
+                    console.log('popup aierto');
                 })
                 // popup.on('close', () => {
                 //     const container = document.querySelector('.mapboxgl-popup-content')

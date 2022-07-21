@@ -3,10 +3,7 @@
     color:black; 
     width:200px; 
     text-align: center; 
-}
-.marker .title{ 
-    margin-block: 10px;
-}
+} 
 .mapboxgl-popup-close-button{
     color:white;
     margin:4px;  
@@ -21,32 +18,9 @@
     background-color: none;
     text-shadow: 0px 0px 10px blue, 0px 0px 10px red;
 }
+  
  
-.details{
-    margin-block: 10px;
-}
-
-.details span{
-    margin-inline-end: 20px;  
-} 
-.carousel{ 
-    width:200px;
-    height:200px; 
-    overflow: hidden; 
-    border-radius: 10px;
-}
-.carousel-items  {  
-    position:relative;
-    width:200px; 
-    height:200px;   
-    display:flex;
-}
-.carousel-items .image{  
-    position:relative;
-    min-width:200px; 
-    min-height:200px;  
-}
-.carousel-items .defaultImage{  
+.defaultImage{  
     position:relative;
     min-width:200px; 
     min-height:200px;  
