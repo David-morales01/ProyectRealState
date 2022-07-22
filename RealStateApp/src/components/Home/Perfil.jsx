@@ -4,7 +4,7 @@ import {FastField, Form, Formik} from 'formik'
 import Header from '../UI/Header/Header' 
 import AuthStore from '../../Store/AuthStore' 
 import RouteStore from '../../Store/RouteStore' 
-import {useNavigate, Link,Navigate} from 'react-router-dom'
+import {Navigate,useNavigate} from 'react-router-dom'
 import * as Yup from 'yup' 
 
 export default function Perfil(){
@@ -15,8 +15,7 @@ export default function Perfil(){
     const status = AuthStore(state => state.status) 
     const editPerfil = AuthStore((state) => state.editPerfil)
 
-    // Other Hooks
-    const navigate = useNavigate()  
+    // Other Hooks 
     const [userImage, setUserImage]= useState(`${import.meta.env.VITE_REACT_APP_ROUTE_IMAGE}/users/${user.img_user}`)
 
     // Theme
@@ -25,6 +24,7 @@ export default function Perfil(){
     const borderColor = useColorModeValue('color.borderLight', 'color.borderDark') 
     const shadowButton = useColorModeValue('#A0A0A0', '#0066cc') 
     const bgContainer = useColorModeValue('bg.containerLight', 'bg.containerDark') 
+    const navigate = useNavigate()
 
     // Yup
     const validate  = Yup.object({
@@ -38,7 +38,11 @@ export default function Perfil(){
     const [desktopView] = useMediaQuery('(min-width: 800px)') 
     
     useEffect(()=>{   
-        ChangeRoute('perfil')
+        ChangeRoute('perfil') 
+        
+        if(!user.id){  
+            navigate("/")  
+        } 
     },[])
     
     function changeImage(file){
@@ -49,15 +53,14 @@ export default function Perfil(){
         }
     }
 
-    if(status == false){  
+    
+    if(!user){
         return (
             <>
-                <Navigate to="/"/> 
+                <Navigate to="/login"/> 
             </>
-        )
-    }
-    
-    if(user.id){
+        ); 
+    }  
         return (
             <Flex w='100vw' minH ='100vh' minW='360px' flexDirection='column'>
                 <Header/> 
@@ -150,13 +153,5 @@ export default function Perfil(){
                     </Box>
                 </Flex>
             </Flex>
-        )
-
-    }else{
-        return (
-            <>
-                <Navigate to="/login"/> 
-            </>
-        ); 
-    }   
+        ) 
 }

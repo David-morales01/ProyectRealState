@@ -19,9 +19,9 @@ export default function MapBoxOptions(){
 
         <>
             <Link to="/perfil"><MenuItem >My perfil</MenuItem></Link>
-            {user.rol == 'admin' ? <Link to='/allUser'><MenuItem>Users</MenuItem></Link> : ''}              
+            {user.rol =='superAdmin' ? <Link to='/userPermits'><MenuItem>User permits</MenuItem></Link> : ''}              
             {desktopView? '':<MenuDrawer/> }
-            {user.rol == 'admin' ? <MenuItem onClick={clickEventMap}>{clickMap? 'Cancel add Marker' : 'New Marker'}</MenuItem> : ''} 
+            {user.rol == 'admin' || user.rol =='superAdmin' ? <MenuItem onClick={clickEventMap}>{clickMap? 'Cancel add Marker' : 'New Marker'}</MenuItem> : ''} 
         </>
     )
 }

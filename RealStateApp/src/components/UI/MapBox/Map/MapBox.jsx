@@ -43,17 +43,20 @@ export default function MapBox(){
 
          mapb.addControl(nav, 'top-right');
 
-         if(user.rol == 'admin'){
+         if(user.rol == 'admin' || user.rol =='superAdmin'){
              mapb.on('click',function(e){
                  mapStore.getCoordinate(e.lngLat)
              })
          }
         changeMap(mapb)
         changeListMarkers()
+
+        return ()=>{
+            mapb.remove()
+        }
     },[])
 
     useEffect(()=>{
-        
 
         if(!listMarkers){
             const removeMarker = document.querySelectorAll('.mapboxgl-marker')
@@ -62,14 +65,13 @@ export default function MapBox(){
                     marker.remove();
                 });
             }
-
         }
     },[listMarkers])
 
     return (
         <>
             <Box w='100%' h='100%'  ref={mapDiv} position='relative'></Box>
-            {listMarkers?<ListMarker/>:''}
+            {listMarkers?<ListMarker/>:<Spinner backGround='rgba(0, 0, 0, 0.4)' />}
             {statusMap? '':<Spinner backGround='rgba(0, 0, 0, 0.9)' />}
             {coordinate? <FormMarker /> :''}
             {error ? <ErrorMarker/>:''}

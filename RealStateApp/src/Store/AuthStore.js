@@ -114,29 +114,31 @@ const useStore = create(set => ({
   editPerfil: async (values)=>{
     
     set({ disabled: true })
-    let formData = new FormData();
-    formData.append('id', values.id)
-    formData.append('nombre', values.nombre)
-    formData.append('email', values.email)
-    formData.append('password', values.password)
-    formData.append('img_user', values.img_user[0])
-    console.log(values)
+    const id = values.id 
+    //  let formData = new FormData();
+    //  formData.append('id', values.id)
+    //  formData.append('nombre', values.nombre)
+    //  formData.append('email', values.email)
+    //  formData.append('password', values.password)
+    //  formData.append('img_user', values.img_user[0])
+    //  console.log(values)
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
      const resp = ky
-     .patch(`${import.meta.env.VITE_REACT_APP_API_URL}/users`, {
+     .put(`${import.meta.env.VITE_REACT_APP_API_URL}/users/${id}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
-      },body:  formData
+      }
+      ,json:  values
      })
-    //  .json()
-    //  .then((resp)=>{
-
-    //   set({ listMarkers: resp.data}) 
-    // })
-    // .finally(()=>{
-    //   set({ disabled: false })
+      .json()
+      .then((resp)=>{
+        console.log(resp)
+       set({ user: resp}) 
+     })
+     .finally(()=>{
+       set({ disabled: false })
        
-    // })
+     })
     
   }
 }))

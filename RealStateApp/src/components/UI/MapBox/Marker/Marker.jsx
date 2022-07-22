@@ -18,7 +18,7 @@ export default function Marker({marker}) {
     if(user.id == marker.user_id){
         markerColor ='#FF3333'
     }
-    new mapboxgl.Marker({ color: markerColor,fontSize:'90px'})
+    const newMarker = new mapboxgl.Marker({ color: markerColor,fontSize:'90px'})
       .setLngLat([marker.long,marker.lat])
       .setPopup(
         new mapboxgl.Popup()
@@ -27,6 +27,10 @@ export default function Marker({marker}) {
           .on('close', onClose)
       )
       .addTo(map)
+      
+      return ()=>{
+        newMarker.remove()
+      }
   }, [map, onClose, onOpen])
 
   if (!isOpen) {

@@ -9,12 +9,12 @@ export default function ListMarker(){
 
     return (
         <>
-         { 
+            { 
                 markers.map((marker)=>{  
-                    return(
-                        <Marker key={marker.id}   marker={marker}/>
-                    )
-                }) 
+                return(
+                    <Marker key={marker.id}   marker={marker}/>
+                )
+            }) 
             }
         </>
     )

@@ -12,7 +12,7 @@ const useStore = create((set,get) => ({
   errorHttp:false,
   clickMap:false,
   error: false,
-  filterValues:{'title':null,'business_types_id': null,'price':null,'room':null,'toilet':null},
+  filterValues:{'title':'','business_types_id': '','price':'','room':'','toilet':''},
   getMarkers: async () => {
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
      const resp = ky
@@ -63,6 +63,8 @@ const useStore = create((set,get) => ({
   changeListMarkers: () => set(state => ({ listMarkers: true})), 
   clickEventMap: () => set(state => ({ clickMap: !state.clickMap })),
   filterMap : (key,value)=>{
+    
+    set({ listMarkers: false })
     console.log('filtrando los ', key, ' iguales a ', value )
      let filterMarkers = get().allMarkers
      const filtervalues = get().filterValues
@@ -76,84 +78,38 @@ const useStore = create((set,get) => ({
   if(filtervalues[key] != value){
       filtervalues[key]=value
      }else{
-       filtervalues[key]=null
-     } const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
-     console.log(filtervalues)
+       filtervalues[key]=''
+     } 
+     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
+     
      const resp = ky
    
-     .post(`${import.meta.env.VITE_REACT_APP_API_URL}/filterMarkers`, {
+     .get(`${import.meta.env.VITE_REACT_APP_API_URL}/filterMarkers`, {
+      searchParams:filtervalues,
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        json:filtervalues
       },
      }).json()
-     .then((resp) => {
-      console.log(resp)
+     .then((resp) => { 
+      set({ markers: resp.data}) 
+      set({ listMarkers: true })
+      if(resp.data<1){
+          set({ error: true})
+        }else{
+          set({ error: false})
+        }
      })
       .catch((err) => { 
+        set({ error: true})
         console.log(err)
       })
-    // // f de filter :V
-    // // valueF de value filtrada :V
-    // Object.entries(filtervalues).forEach(f=>{
-    //   const key = f[0]
-    //   const value = f[1]
-    //   if(value != null){
-    //     switch(key){
-    //       case 'title':
-    //         filterMarkers =filterMarkers.filter(valueF => {
-    //           let title = valueF[key]
-    //           title =title.toLowerCase()
-    //           const valueComp =value.toLowerCase()
-    //           if(title.includes(valueComp)){
-    //             return valueF
-    //           }
-    //         })
-    //       break;
-    //       case 'business_types_id':
-    //         filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
-    //       break;
-    //       case 'price': 
-    //         filterMarkers =filterMarkers.filter(valueF =>{  
-    //           const price = valueF[key]
-    //           const min =value[0]
-    //           const max= value[1]
-    //           if(price > min && price < max){
-    //             return valueF
-    //           } 
-    //         })
-    //       break;
-    //       case 'room':
-    //         if(value <=4){
-    //           filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
-    //         }else{
-    //           filterMarkers =filterMarkers.filter(valueF => valueF[key] >=5)
-    //         }
-    //       break;
-    //       case 'toilet':
-    //         if(value <=4){
-    //           filterMarkers =filterMarkers.filter(valueF => valueF[key]== value)
-    //         }else{
-    //           filterMarkers =filterMarkers.filter(valueF => valueF[key] >=5)
-    //         }
-    //       break;
-    //     }
-    //   }
-    // })
-    // set({ listMarkers: true})
-
-    // set({ filterValues: filtervalues})
-    // set({ markers: filterMarkers})
-    // if(filterMarkers.length <1){
-    //   set({ error: true})
-    // }else{
-    //   set({ error: false})
-
-    // }
+      .finally(()=>{
+        set({ listMarkers: true })
+      })
   },
   saveCoordinate: async(values)=>{
-    set({ disable: true })
-    set({ markers: ''})
+    set({ disable: true }) 
+    set({ listMarkers: false})  
     let formData = new FormData();
     formData.append('title', values.title)
     formData.append('description', values.description)
@@ -168,7 +124,7 @@ const useStore = create((set,get) => ({
       formData.append('images[]', values.images[i])
     }
 
-    const listAllMarkers = get().allMarkers
+    const listAllMarkers = get().markers
     const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
      const resp = ky
      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/markers`, {
@@ -180,13 +136,11 @@ const useStore = create((set,get) => ({
 
      listAllMarkers.push(resp.data) 
     })
-    .finally(()=>{
-      set({ listMarkers: true})  
-      set({ markers: listAllMarkers})
-      // console.log('despues')
-       set({ allMarkers: listAllMarkers})
+    .finally(()=>{ 
+      set({ markers: listAllMarkers}) 
        set({ disable: false })
        set({ coordinate: null })
+       set({ listMarkers: true})  
       // console.log(listAllMarkers)
     })
   }
