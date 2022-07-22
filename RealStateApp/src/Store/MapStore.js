@@ -2,10 +2,10 @@ import create from 'zustand'
 import ky from "ky";
 
 const useStore = create((set,get) => ({
-  disable:false,
-  statusHttp:false,
+  map:null,
+  disable:false, 
   statusMap:false,
-  listMarkers:false,
+  listMarkers:null,
   markers:[],
   allMarkers:[],
   coordinate:null,
@@ -26,9 +26,7 @@ const useStore = create((set,get) => ({
       set({ markers: resp })
       if(resp.length <1){
         set({ error: true}) 
-      }
-      set({ statusHttp: true })
-      set({ listMarkers: true })
+      }  
         setTimeout(()=>{
         set({ statusMap: true })
       }, 2000);
@@ -59,19 +57,42 @@ const useStore = create((set,get) => ({
   ErrorClose : ()=>{
     set(state => ({error: false }) )
   },
-  changeListMarkers: () => set(state => ({ listMarkers: true})),
-  changeStatusHttp: () => set(state => ({ statusHttp: false })),
+  changeMap : (value)=>{
+    set({ map: value }) 
+  },
+  changeListMarkers: () => set(state => ({ listMarkers: true})), 
   clickEventMap: () => set(state => ({ clickMap: !state.clickMap })),
   filterMap : (key,value)=>{
     console.log('filtrando los ', key, ' iguales a ', value )
-    // let filterMarkers = get().allMarkers
-    // const filtervalues = get().filterValues
-
-    // if(filtervalues[key] != value){
-    //   filtervalues[key]=value
-    // }else{
-    //   filtervalues[key]=null
-    // }
+     let filterMarkers = get().allMarkers
+     const filtervalues = get().filterValues
+  // if(key ==business_types_id){
+  //   if(filtervalues[key] != value){
+  //     filtervalues[key]=value
+  //    }else{
+  //      filtervalues[key]=null
+  //    }
+  // }else 
+  if(filtervalues[key] != value){
+      filtervalues[key]=value
+     }else{
+       filtervalues[key]=null
+     } const accessToken = localStorage.getItem(`${import.meta.env.VITE_REACT_APP_ACCESS_TOKEN}`)
+     console.log(filtervalues)
+     const resp = ky
+   
+     .post(`${import.meta.env.VITE_REACT_APP_API_URL}/filterMarkers`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        json:filtervalues
+      },
+     }).json()
+     .then((resp) => {
+      console.log(resp)
+     })
+      .catch((err) => { 
+        console.log(err)
+      })
     // // f de filter :V
     // // valueF de value filtrada :V
     // Object.entries(filtervalues).forEach(f=>{

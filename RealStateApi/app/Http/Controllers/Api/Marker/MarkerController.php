@@ -5,12 +5,9 @@ namespace App\Http\Controllers\Api\Marker;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Marker;
-use App\Models\Image;
-use Illuminate\Support\Facades\DB;
+use App\Models\Image; 
 use Illuminate\Support\Facades\Auth; 
-use App\Http\Resources\MarkerResource;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use App\Http\Resources\MarkerResource; 
 use Illuminate\Http\UploadedFile;
 
 class MarkerController extends Controller
@@ -75,5 +72,41 @@ class MarkerController extends Controller
         return MarkerResource::make($marker); 
          
     } 
+
+    public function filter(Request $request)
+    {
+         $room = $request->input('room');
+         $toilet = $request->input('toilet');
+         $title = $request->input('title');
+         $business_types_id = $request->input('business_types_id');
+         $price = $request->input('price');
+        // filterValues:{'title':null,'business_business_types_ids_id': null,'price':null,'room':null,'toilet':null},
+ 
+
+        $marker = Marker::query()
+            ->when($business_types_id,
+                function ($query) use ($business_types_id) {
+                    $query->where('business_types_id', $business_types_id);
+                })
+            ->when($room,
+                function ($query) use ($room) {
+                    ($room == 5) ? $query->where('room', '>=', $room) : 
+                    $query->where('room', '<=', $room);
+                })
+            ->when($toilet,
+                function ($query) use ($toilet) {
+                    ($toilet == 5) ? $query->where('toilet', '>=', $toilet)
+                        : $query->where('toilet', '<=', $toilet);
+                })
+            ->when($request->input('price'),
+                function ( $query) use ($price) {
+                    $query->whereBetween('price', explode(',', $price) );
+                })
+            ->when($title ,
+                function ( $query) use ($title) {
+                    $query->where('name', 'like', "%$title");
+                })->with('images')->get();
+            return MarkerResource::make($marker);  
+    }
    
 }

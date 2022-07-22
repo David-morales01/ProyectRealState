@@ -1,9 +1,4 @@
-.divMarker {
-    position:relative;  
-    color:black; 
-    width:200px; 
-    text-align: center; 
-} 
+ 
 .mapboxgl-popup-close-button{
     color:white;
     margin:4px;  
@@ -22,7 +17,7 @@
  
 .defaultImage{  
     position:relative;
-    min-width:200px; 
+    min-width:220px; 
     min-height:200px;  
     background: rgb(209, 209, 209);
     display: flex;

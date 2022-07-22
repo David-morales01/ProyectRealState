@@ -22,8 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::middleware('auth:sanctum')->group(function () { 
-    Route::apiResource('markers', MarkerController::class); 
+Route::middleware('auth:sanctum')->group(function () {  
+    Route::get('markers', [MarkerController::class,'index']); 
+    Route::post('markers', [MarkerController::class,'store']);
+    Route::post('filterMarkers', [MarkerController::class,'filter']); 
     Route::patch('users', [UserController::class,'update']); 
 });
 

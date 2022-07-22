@@ -1,20 +1,21 @@
 import React from 'react'
-import {Box,Text} from '@chakra-ui/react'
-import {ToiletIcon,RoomIcon} from '../Icons/Icons'  
+import {Flex,Box,Text,Img} from '@chakra-ui/react'
+import {ToiletIcon,RoomIcon} from '../../Icons/Icons'  
+
 
 
 export default function Popup({marker}){
     const imageLength =  marker.images.length 
     return(
-        <Box>
+        <Box color='black' textAlign='center'>
             <Text marginBlock = '10px'>{marker.title}</Text>
-            <Box w='200px' h='200px' overflow= 'hidden' borderRadius='10px'> 
+            <Box w='220px' h='200px' overflow= 'hidden' borderRadius='10px'> 
                {imageLength > 0 ?
-                    <Box position='relative' w='200px' h='200px' display='flex' className={`carousel${imageLength}`}> 
+                    <Box position='relative' w='100%' h='100%' display='flex' className={`carousel${imageLength}`}> 
                         {marker.images.map((item)=>{
                             return(
 
-                                <img   
+                                <Img position='relative' w='100%' h='100%' key={item.id}
                                 src={`${import.meta.env.VITE_REACT_APP_ROUTE_STORAGE}/${item.src_img}`}/>
                             )
                         })}
@@ -25,9 +26,9 @@ export default function Popup({marker}){
                 <Box my='10px'>
                 {marker.description} 
                 </Box>
-                <Flex gap='10px' >
-                    <Box><RoomIcon/>{marker.room}</Box>
-                    <Box><ToiletIcon/>{marker.toilet}</Box>
+                <Flex gap='20px' align='center' >
+                    <Flex gap='10px' align='center'><RoomIcon/>{marker.room}</Flex>
+                    <Flex gap='10px' align='center'><ToiletIcon/>{marker.toilet}</Flex>
                 </Flex>
             </Box> 
     )

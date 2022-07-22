@@ -88,7 +88,6 @@ const useStore = create(set => ({
         }else{  
           set({ status: true }) 
           set({ user: resp })  
-          console.log(resp)
         }
       })
       .catch((err) => {
